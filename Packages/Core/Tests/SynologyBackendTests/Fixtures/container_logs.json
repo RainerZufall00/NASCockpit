@@ -1,0 +1,4 @@
+{"success":true,"data":{"logs":[
+ {"created":"2026-10-02T10:00:05.5Z","stream":"stderr","text":"Error: serial port not found"},
+ {"created":"2026-10-02T10:00:01Z","stream":"stdout","text":"Starting Zigbee2MQTT"}
+],"total":2}}

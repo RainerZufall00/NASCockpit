@@ -1,0 +1,7 @@
+{"success":true,"data":{"error_count":1,"info_count":3,"total":5,"log_list":[
+ {"event":"[Network][Offsite] Backup task finished successfully. [1200 files scanned] [3 files changed]","level":"info","time":"2026/11/08 03:24:16","user":"SYSTEM"},
+ {"event":"[Network][Offsite] Backup task started.","level":"info","time":"2026/11/08 03:00:25","user":"SYSTEM"},
+ {"event":"[Local][USB Photos] Incomplete file backup. (The file is a special file.) [/volume1/photo/x.sock]","level":"warn","time":"2026/11/08 02:10:00","user":"SYSTEM"},
+ {"event":"[Docker to Office] Failed to connect to the backup destination.","level":"err","time":"2026/11/08 01:00:00","user":"admin"},
+ {"event":"Version rotation completed from ID [host-01_1.hbk].","level":"info","time":"2026/11/07 01:27:55","user":"admin"}
+]}}

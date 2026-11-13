@@ -1,0 +1,12 @@
+{"success":true,"data":{
+ "volumes":[
+  {"id":"volume_1","vol_path":"/volume1","status":"normal","fs_type":"btrfs","size":{"total":"11518464000000","used":"7487001600000"}},
+  {"id":"volume_2","vol_path":"/volume2","status":"degraded","fs_type":"ext4","size":{"total":2000000000000,"used":1900000000000}},
+  {"broken_entry":true}
+ ],
+ "disks":[
+  {"id":"sata1","name":"Drive 1","longName":"Drive 1","model":"HAT5300-4T      ","temp":34,"status":"normal","smart_status":"normal"},
+  {"id":"sata2","name":"Drive 2","model":"HAT5300-4T","temp":"36","status":"normal","smart_status":"warning"}
+ ],
+ "storagePools":[]
+}}

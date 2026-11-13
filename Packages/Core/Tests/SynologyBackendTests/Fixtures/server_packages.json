@@ -1,0 +1,5 @@
+{"success":true,"data":{"packages":[
+ {"id":"ContainerManager","dname":"Container Manager","version":"24.0.2-1541","link":"https://global.download.synology.com/download/Package/spk/ContainerManager/24.0.2-1541/ContainerManager-x86_64-24.0.2-1541.spk","md5":"0123456789abcdef0123456789abcdef","size":104857600},
+ {"id":"HyperBackup","dname":"Hyper Backup","version":"4.1.0-3700"},
+ {"id":"NotInstalled","dname":"Other","version":"1.0.0-1"}
+]}}

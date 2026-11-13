@@ -1,0 +1,122 @@
+{
+ "data": {
+  "admingrpsetmtime": "1682672862",
+  "items": [
+   {
+    "bindEvt": true,
+    "className": "SYNO.SDS.Backup.Application",
+    "fn": [],
+    "hasMail": true,
+    "isEncoded": true,
+    "level": "NOTIFICATION_INFO",
+    "mailType": "html",
+    "msg": [
+     "{\"%APP_MOD_SIZE%\":\"522.4 MB\",\"%APP_TOTAL_SIZE%\":\"523.7 MB\",\"%DATE%\":\"09.11.2026\",\"%DESTINATION_IP%\":\"100.64.0.8 / HyperBackup /\",\"%DESTINATION_PATH%\":\"DiskStation_1.hbk\",\"%DURATION%\":\"39 Minuten \",\"%EA_TOTAL_SIZE%\":\"39.2 GB\",\"%HOSTNAME%\":\"DiskStation\",\"%OSNAME%\":\"DSM\",\"%SHARE_DEL_SIZE%\":\"6.5 GB\",\"%SHARE_MOD_SIZE%\":\"849.6 MB\",\"%SHARE_NEW_SIZE%\":\"7.7 GB\",\"%SHARE_TARGET_SIZE%\":\"914.8 GB\",\"%START_TIME%\":\"Mo, 9 Nov 2026 20:48:07\",\"%TARGET_INCREASE_SIZE%\":\"7.5 GB\",\"%TASK_NAME%\":\"Offsite\",\"%TASK_TYPE%\":\"Network backup\",\"%TIME%\":\"21:27\",\"DESKTOP_NOTIFY_CLASSNAME\":\"SYNO.SDS.Backup.Application\",\"DESKTOP_NOTIFY_TITLE\":\"app:package_name_dev\"}"
+    ],
+    "notifyId": 1375,
+    "tag": "",
+    "time": 1794256029,
+    "title": "BackupTaskFinished"
+   },
+   {
+    "bindEvt": true,
+    "className": "SYNO.SDS.LogCenter.BuiltIn",
+    "fn": [],
+    "hasMail": true,
+    "isEncoded": true,
+    "level": "NOTIFICATION_INFO",
+    "mailType": "html",
+    "msg": [
+     "{\"%DATE%\":\"09.11.2026\",\"%HOST%\":\"DiskStation\",\"%HOSTNAME%\":\"DiskStation\",\"%OSNAME%\":\"DSM\",\"%SEV%\":\"err\",\"%SYSLOG_CONTENT%\":\"SYSTEM:\\t[Network][Offsite] Failed to run backup task.\",\"%TIME%\":\"06:32\",\"DESKTOP_NOTIFY_CLASSNAME\":\"SYNO.SDS.LogCenter.BuiltIn\"}"
+    ],
+    "notifyId": 1370,
+    "tag": "",
+    "time": 1794202336,
+    "title": "SYNOSYSLOG_SEV_EXCEED"
+   },
+   {
+    "bindEvt": true,
+    "className": "SYNO.SDS.Backup.Application",
+    "fn": [],
+    "hasMail": true,
+    "isEncoded": true,
+    "level": "NOTIFICATION_ERROR",
+    "mailType": "html",
+    "msg": [
+     "{\"%DATE%\":\"09.11.2026\",\"%DESTINATION_IP%\":\"100.64.0.8 / HyperBackup /\",\"%DESTINATION_PATH%\":\"DiskStation_1.hbk\",\"%DURATION%\":\"2 Stunden 2 Minuten 13 Sekunden \",\"%HOSTNAME%\":\"DiskStation\",\"%OSNAME%\":\"DSM\",\"%START_TIME%\":\"Mo, 9 Nov 2026 04:30:02\",\"%TASK_NAME%\":\"Offsite\",\"%TASK_TYPE%\":\"Network backup\",\"%TIME%\":\"06:32\",\"DESKTOP_NOTIFY_CLASSNAME\":\"SYNO.SDS.Backup.Application\",\"DESKTOP_NOTIFY_TITLE\":\"app:package_name_dev\"}"
+    ],
+    "notifyId": 1365,
+    "tag": "",
+    "time": 1794202335,
+    "title": "BackupTaskFailed"
+   },
+   {
+    "bindEvt": true,
+    "className": "SYNO.SDS.Backup.Application",
+    "fn": [],
+    "hasMail": true,
+    "isEncoded": true,
+    "level": "NOTIFICATION_INFO",
+    "mailType": "html",
+    "msg": [
+     "{\"%DATE%\":\"08.11.2026\",\"%DESTINATION_IP%\":\"Documents-Backup /\",\"%DESTINATION_PATH%\":\"Documents.hbk\",\"%DURATION%\":\"7 Minuten 30 Sekunden \",\"%HOSTNAME%\":\"DiskStation\",\"%OSNAME%\":\"DSM\",\"%START_TIME%\":\"So, 8 Nov 2026 23:22:25\",\"%TASK_NAME%\":\"Documents\",\"%TASK_TYPE%\":\"Google Drive \",\"%TIME%\":\"23:29\",\"DESKTOP_NOTIFY_CLASSNAME\":\"SYNO.SDS.Backup.Application\",\"DESKTOP_NOTIFY_TITLE\":\"app:package_name_dev\"}"
+    ],
+    "notifyId": 1345,
+    "tag": "",
+    "time": 1794176996,
+    "title": "IntegrityCheckFinishedTargetPass"
+   },
+   {
+    "bindEvt": true,
+    "className": "",
+    "fn": [],
+    "hasMail": true,
+    "isEncoded": true,
+    "level": "NOTIFICATION_ERROR",
+    "mailType": "html",
+    "msg": [
+     "{\"%1%\":\"web\",\"%DATE%\":\"05.11.2026\",\"%HOSTNAME%\":\"DiskStation\",\"%OSNAME%\":\"DSM\",\"%TIME%\":\"21:12\"}"
+    ],
+    "notifyId": 1280,
+    "tag": "",
+    "time": 1793909557,
+    "title": "docker_container_unexpected_exit"
+   },
+   {
+    "bindEvt": true,
+    "className": "SYNO.SDS.LogCenter.BuiltIn",
+    "fn": [],
+    "hasMail": true,
+    "isEncoded": true,
+    "level": "NOTIFICATION_INFO",
+    "mailType": "html",
+    "msg": [
+     "{\"%DATE%\":\"05.11.2026\",\"%HOST%\":\"DiskStation\",\"%HOSTNAME%\":\"DiskStation\",\"%OSNAME%\":\"DSM\",\"%SEV%\":\"err\",\"%SYSLOG_CONTENT%\":\"admin:\\tFailed to update package [Node.js v22].\",\"%TIME%\":\"07:12\",\"DESKTOP_NOTIFY_CLASSNAME\":\"SYNO.SDS.LogCenter.BuiltIn\"}"
+    ],
+    "notifyId": 1270,
+    "tag": "",
+    "time": 1793859145,
+    "title": "SYNOSYSLOG_SEV_EXCEED"
+   },
+   {
+    "bindEvt": true,
+    "className": "",
+    "fn": [],
+    "hasMail": true,
+    "isEncoded": true,
+    "level": "NOTIFICATION_WARN",
+    "mailType": "html",
+    "msg": [
+     "{\"%1%\":\"photo\",\"%2%\":\"95%\",\"%HOSTNAME%\":\"DiskStation\"}"
+    ],
+    "notifyId": 1200,
+    "tag": "",
+    "time": 1793800000,
+    "title": "ShareQuotaExceeded"
+   }
+  ],
+  "newestMsgTime": 1794256029,
+  "total": 7
+ },
+ "success": true
+}

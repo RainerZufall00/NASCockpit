@@ -1,0 +1,5 @@
+{"success":true,"data":{"total":3,"packages":[
+ {"id":"ContainerManager","name":"Container Manager","version":"24.0.2-1535","additional":{"status":"running","description":"Run containers."}},
+ {"id":"HyperBackup","name":"Hyper Backup","version":"4.1.1-3733","additional":{"status":"stop"}},
+ {"id":"TextEditor","name":"Text Editor","version":"1.2.0-0120"}
+]}}

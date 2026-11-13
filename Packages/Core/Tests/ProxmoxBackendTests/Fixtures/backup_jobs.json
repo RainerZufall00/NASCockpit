@@ -1,0 +1,4 @@
+{"data":[
+ {"id":"backup-5f3a1c2d-1e2f","type":"vzdump","schedule":"02:30","enabled":1,"storage":"nas-backup","vmid":"100,101","mode":"snapshot","compress":"zstd","comment":"Daily to NAS","next-run":1760000000,"prune-backups":{"keep-daily":"7","keep-weekly":"4"},"performance":{"max-workers":16},"fleecing":{"enabled":0},"repeat-missed":0,"notes":null,"mailto":"admin@example.com","notes-template":"{{guestname}}"},
+ {"id":"backup-weekly","type":"vzdump","schedule":"sun 03:00","enabled":0,"storage":"pbs","all":1,"exclude":"900","mode":"snapshot","node":"pve2","next-run":1760500000}
+]}

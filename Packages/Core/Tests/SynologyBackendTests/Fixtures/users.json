@@ -1,0 +1,28 @@
+{
+ "success": true,
+ "data": {
+  "offset": 0,
+  "total": 3,
+  "users": [
+   {
+    "name": "nas-admin",
+    "description": "App account",
+    "email": "admin@example.lan",
+    "expired": "normal"
+   },
+   {
+    "name": "admin",
+    "description": "System default user",
+    "expired": "now"
+   },
+   {
+    "name": "anna",
+    "additional": {
+     "email": "anna@example.lan",
+     "description": "Anna",
+     "expired": "2020/1/1"
+    }
+   }
+  ]
+ }
+}

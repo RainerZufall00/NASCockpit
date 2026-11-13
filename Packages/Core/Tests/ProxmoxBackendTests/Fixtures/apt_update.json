@@ -1,0 +1,5 @@
+{"data":[
+ {"Package":"pve-manager","Version":"8.3.3","OldVersion":"8.3.2","Title":"Proxmox Virtual Environment Management Tools","Priority":"optional","Section":"admin","Origin":"Proxmox","Arch":"amd64"},
+ {"Package":"proxmox-kernel-6.8.12-8-pve-signed","Version":"6.8.12-8","OldVersion":"","Title":"Proxmox Kernel Image (signed)","Priority":"optional","Section":"kernel","Origin":"Proxmox"},
+ {"Package":"openssl","Version":"3.0.16-1~deb12u1","OldVersion":"3.0.15-1~deb12u1","Title":"Secure Sockets Layer toolkit - cryptographic utility","Priority":"optional","Section":"utils","Origin":"Debian"}
+]}

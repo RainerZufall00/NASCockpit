@@ -1,0 +1,8 @@
+{
+ "success": true,
+ "data": {
+  "enable_ssh": true,
+  "enable_telnet": false,
+  "ssh_port": 2222
+ }
+}

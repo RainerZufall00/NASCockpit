@@ -1,0 +1,24 @@
+{
+ "success": true,
+ "data": {
+  "offset": 0,
+  "total": 2,
+  "shares": [
+   {
+    "isdir": true,
+    "name": "photo",
+    "path": "/photo",
+    "additional": {
+     "time": {
+      "mtime": 1762400000
+     }
+    }
+   },
+   {
+    "isdir": true,
+    "name": "home",
+    "path": "/home"
+   }
+  ]
+ }
+}

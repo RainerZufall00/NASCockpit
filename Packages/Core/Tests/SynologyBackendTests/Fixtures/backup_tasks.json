@@ -1,0 +1,6 @@
+{"success":true,"data":{"total":4,"task_list":[
+ {"task_id":3,"name":"Offsite","state":"backupable","status":"none","type":"image:image_cloud","transfer_type":"cloud_c2","target_type":"cloud_image","last_bkp_time":"2026/11/08 03:00","next_bkp_time":"2026/11/09 03:00","last_bkp_result":"done"},
+ {"task_id":5,"name":"USB Photos","state":"backupable","status":"backup","type":"image:image_local","last_bkp_time":"2026/11/07 02:00:12","last_bkp_result":"backingup","last_bkp_progress":{"progress":37,"step":"backup"}},
+ {"task_id":7,"name":"Docker to Office","status":"none","type":"image:image_remote","last_bkp_time":"1762560000","last_bkp_result":"fail"},
+ {"task_id":9,"name":"Archive","status":"waiting","type":"something_new","last_bkp_result":"partial"}
+]}}

@@ -1,0 +1,5 @@
+{"success":true,"data":{"total":3,"snapshots":[
+ {"time":"GMT+01-2026.11.07-03.00.02","desc":"","lock":false,"schedule_snapshot":true,"worm_lock":false},
+ {"time":"GMT+01-2026.11.08-03.00.01","desc":"","lock":false,"schedule_snapshot":true},
+ {"time":"GMT-05:30-2026.11.05-10.15.00","desc":"Before update","lock":true,"schedule_snapshot":false,"worm_lock":true,"worm_lock_end":"1762900000"}
+]}}

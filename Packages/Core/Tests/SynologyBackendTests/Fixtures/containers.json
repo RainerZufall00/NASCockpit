@@ -1,0 +1,7 @@
+{"success":true,"data":{"containers":[
+ {"name":"jellyfin","image":"jellyfin/jellyfin:10.10","status":"running","State":{"Status":"running","ExitCode":0,"StartedAt":"2026-10-01T08:15:30.123456789Z"},"labels":{}},
+ {"name":"/zigbee2mqtt","image":"koenkk/zigbee2mqtt:latest","status":"exited","State":{"Status":"exited","ExitCode":1,"StartedAt":"2026-10-02T10:00:00Z"},"labels":{"com.docker.compose.project":"smarthome"}},
+ {"name":"mosquitto","image":"eclipse-mosquitto:2","status":"running","State":{"Status":"running","ExitCode":0,"StartedAt":"2026-10-02T10:00:00Z"},"labels":{"com.docker.compose.project":"smarthome"}},
+ {"name":"paperless","image":"ghcr.io/paperless-ngx/paperless-ngx:2","status":"stopped","State":{"Status":"exited","ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z"}},
+ {"image":"broken-entry-without-name"}
+],"total":5}}

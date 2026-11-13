@@ -1,0 +1,25 @@
+{"success":true,"data":{"plans":[
+ {"plan_id":"p-1","target_id":"photo","role":1,"role_str":"mainsite","is_to_local":false,"target_type":2,
+  "additional":{
+   "can_do":{"can_sync":true,"can_delete":true},
+   "main_site_info":{"hostname":"home-nas","target_id":"photo","target_name":"photo","role":1},
+   "dr_site_info":{"hostname":"office-nas","target_id":"photo-1","target_name":"photo-1","role":2},
+   "op_info":{"op_progress":{"percentage":-1},"op_status":1},
+   "last_op_info":{"err_code":0,"is_success":true,"op_status":16,"update_time":1762560000},
+   "sync_policy":{"enabled":true,"is_send_encrypted":true,"next_trigger_time":1762650000},
+   "sync_report":{"fail_sync_count":0,"success_sync_count":12,"syncing_record":null}}},
+ {"plan_id":"p-2","target_id":"docker","role_str":"mainsite","is_to_local":false,
+  "additional":{
+   "can_do":{"can_sync":true},
+   "main_site_info":{"hostname":"home-nas","target_name":"docker"},
+   "dr_site_info":{"hostname":"backup-nas","target_name":"docker"},
+   "op_info":{"op_progress":{"percentage":42},"op_status":2},
+   "last_op_info":{"err_code":3002,"is_success":false,"update_time":1762470000},
+   "sync_policy":{"enabled":false,"next_trigger_time":1762650000},
+   "sync_report":{"fail_sync_count":3,"syncing_record":{"begin_time":1762600000}}}},
+ {"plan_id":"p-3","role_str":"drsite","is_to_local":false,
+  "additional":{
+   "main_site_info":{"hostname":"office-nas","target_name":"scans"},
+   "dr_site_info":{"hostname":"home-nas","target_name":"scans-copy"},
+   "can_do":{"can_sync":false}}}
+]}}

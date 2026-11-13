@@ -1,0 +1,4 @@
+{"data":[
+ {"devpath":"/dev/nvme0n1","model":"Samsung SSD 980 PRO 2TB","serial":"S6B2NL0T","size":2000398934016,"type":"nvme","health":"PASSED","wearout":97,"used":"LVM"},
+ {"devpath":"/dev/sda","model":"WDC WD40EFRX","size":4000787030016,"type":"hdd","health":"FAILED!","wearout":"N/A","used":"ZFS"}
+]}

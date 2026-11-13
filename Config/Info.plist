@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Background refresh (opt-in per NAS): read-only status for notifications and widgets. -->
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.nascockpit.app.refresh</string>
+	</array>
+	<!-- Widgets open the app at a NAS or at the updates list. -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.nascockpit.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>nascockpit</string>
+			</array>
+		</dict>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<!-- Merged with the generated Info.plist. HTTP is allowed only for local and VPN hosts;
+	     the app itself refuses HTTP for public addresses (ServerAddress.isPrivateNetworkHost). -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsLocalNetworking</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>ts.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>

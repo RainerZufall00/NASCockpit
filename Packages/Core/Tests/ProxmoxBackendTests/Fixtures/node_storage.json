@@ -1,0 +1,5 @@
+{"data":[
+ {"storage":"local","type":"dir","content":"iso,vztmpl,backup","active":1,"enabled":1,"shared":0,"total":100000000000,"used":23000000000,"avail":77000000000},
+ {"storage":"local-zfs","type":"zfspool","content":"images,rootdir","active":1,"enabled":1,"shared":0,"total":1800000000000,"used":640000000000,"avail":1160000000000},
+ {"storage":"nas-backup","type":"nfs","content":"backup","active":0,"enabled":1,"shared":1,"total":0,"used":0,"avail":0}
+]}

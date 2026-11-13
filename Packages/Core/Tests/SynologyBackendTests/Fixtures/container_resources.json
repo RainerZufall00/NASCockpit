@@ -1,0 +1,4 @@
+{"success":true,"data":{"resources":[
+ {"name":"jellyfin","cpu":11.4,"memory":"1237319680","memoryPercent":"7.2"},
+ {"name":"mosquitto","cpu":"0.1","memory":9437184}
+]}}

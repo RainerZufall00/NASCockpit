@@ -1,0 +1,5 @@
+{"data":[
+ {"upid":"UPID:pve:000A1B2C:00ABCDEF:67300000:vzdump::root@pam:","type":"vzdump","id":"","user":"root@pam","node":"pve","starttime":1730000000},
+ {"upid":"UPID:pve:000A1B2B:00ABCDEE:672F0000:vzdump:101:root@pam:","type":"vzdump","id":"101","user":"root@pam","node":"pve","starttime":1729900000,"endtime":1729901000,"status":"job errors"},
+ {"upid":"UPID:pve:000A1B2A:00ABCDED:672E0000:vzdump:100:root@pam:","type":"vzdump","id":"100","user":"root@pam","node":"pve","starttime":1729800000,"endtime":1729800900,"status":"OK"}
+],"total":3}

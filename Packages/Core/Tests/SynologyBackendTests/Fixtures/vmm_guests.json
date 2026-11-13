@@ -1,0 +1,4 @@
+{"success":true,"data":{"guests":[
+ {"guest_id":"5a2d9b3e-1111-4c6f-9d2a-000000000001","guest_name":"homeassistant","status":"running","autorun":1,"description":"Smart home","vcpu_num":2,"vram_size":4096,"host_id":"h1","host_name":"DS923"},
+ {"guest_id":"5a2d9b3e-1111-4c6f-9d2a-000000000002","guest_name":"win11","status":"shutdown","autorun":0,"description":"","vcpu_num":4,"vram_size":8192,"host_id":"h1","host_name":"DS923"}
+]}}

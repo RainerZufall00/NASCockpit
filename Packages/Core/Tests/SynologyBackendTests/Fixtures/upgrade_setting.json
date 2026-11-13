@@ -1,0 +1,12 @@
+{
+ "success": true,
+ "data": {
+  "autoupdate_enable": true,
+  "autoupdate_type": "hotfix-security",
+  "schedule": {
+   "week_day": "0",
+   "hour": 3,
+   "minute": 0
+  }
+ }
+}

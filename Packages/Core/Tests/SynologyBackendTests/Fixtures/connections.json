@@ -1,0 +1,21 @@
+{
+ "success": true,
+ "data": {
+  "total": 2,
+  "items": [
+   {
+    "who": "anna",
+    "from": "192.168.1.23",
+    "type": "SMB",
+    "time": 1762400000,
+    "descr": ""
+   },
+   {
+    "who": "nas-admin",
+    "from": "100.84.12.7",
+    "type": "HTTP/HTTPS",
+    "time": "2026/11/06 08:00:00"
+   }
+  ]
+ }
+}

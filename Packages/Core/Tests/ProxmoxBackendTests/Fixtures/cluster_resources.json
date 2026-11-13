@@ -1,0 +1,7 @@
+{"data":[
+ {"id":"qemu/100","type":"qemu","vmid":100,"name":"homeassistant","node":"pve","status":"running","cpu":0.0612,"maxcpu":2,"mem":1992294400,"maxmem":4294967296,"disk":0,"maxdisk":34359738368,"uptime":190000,"template":0,"tags":"smarthome;prod"},
+ {"id":"qemu/101","type":"qemu","vmid":101,"name":"win11","node":"pve","status":"stopped","cpu":0,"maxcpu":4,"mem":0,"maxmem":8589934592,"uptime":0,"template":0},
+ {"id":"qemu/900","type":"qemu","vmid":900,"name":"debian-template","node":"pve","status":"stopped","maxcpu":1,"maxmem":2147483648,"template":1},
+ {"id":"lxc/200","type":"lxc","vmid":200,"name":"pihole","node":"pve2","status":"running","cpu":0.01,"maxcpu":1,"mem":188743680,"maxmem":536870912,"uptime":234000,"lock":"backup","hastate":"started"},
+ {"id":"storage/pve/local","type":"storage","node":"pve","status":"available"}
+]}

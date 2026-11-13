@@ -1,0 +1,4 @@
+{"success":true,"data":{
+ "a1b2c3":{"id":"a1b2c3","name":"smarthome","status":"RUNNING","path":"/volume1/docker/smarthome","containers":[{"Name":"zigbee2mqtt"},{"Name":"mosquitto"}]},
+ "d4e5f6":{"id":"d4e5f6","name":"backup-tools","status":"STOPPED","path":"/volume1/docker/backup-tools","containers":[]}
+}}

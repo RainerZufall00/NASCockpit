@@ -1,0 +1,7 @@
+// Shared build settings for all targets (committed).
+// Personal values such as your Apple team ID go into Config/Secrets.xcconfig,
+// which is ignored by Git. Copy Config/Secrets.example.xcconfig to get started.
+
+DEVELOPMENT_TEAM =
+
+#include? "Secrets.xcconfig"

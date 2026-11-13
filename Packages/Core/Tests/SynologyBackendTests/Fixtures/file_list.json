@@ -1,0 +1,33 @@
+{
+ "success": true,
+ "data": {
+  "offset": 0,
+  "total": 3,
+  "files": [
+   {
+    "isdir": false,
+    "name": "cover.jpg",
+    "path": "/photo/cover.jpg",
+    "additional": {
+     "size": 3100000,
+     "time": {
+      "mtime": 1762400000
+     }
+    }
+   },
+   {
+    "isdir": true,
+    "name": "2025",
+    "path": "/photo/2025",
+    "additional": {
+     "size": 0
+    }
+   },
+   {
+    "isdir": true,
+    "name": "2024",
+    "path": "/photo/2024"
+   }
+  ]
+ }
+}
