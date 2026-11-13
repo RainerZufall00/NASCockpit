@@ -17,10 +17,13 @@
 
 ## 💡 Why
 
-If you run more than one NAS – at home, in the office, an offsite backup box, a Proxmox host on the side – you end up
-signing in to each one just to see whether something needs an update or a backup failed. NAS Cockpit puts all of
-them on one screen: status, updates, containers, backups and logs, across every server at once. Free, without
-accounts or analytics, and with a security model that is written down instead of hidden.
+I do a lot of my homelab admin from the iPad and the iPhone – and neither Synology nor Proxmox offers a decent app
+for that. On a touch screen, the DSM and Proxmox web interfaces are fiddly: tiny controls, zooming in and out, and
+signing in to each server separately just to see whether something needs an update or a backup failed.
+
+So I built the app I was missing. NAS Cockpit puts all servers on one screen – status, updates, containers, backups
+and logs, across every server at once. Native, free, without accounts or analytics, and with a security model that is
+written down instead of hidden.
 
 ## ✨ Features
 
