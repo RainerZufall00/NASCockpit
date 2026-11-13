@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+<defs>
+<linearGradient id="bg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1024"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DCE7F8"/></linearGradient>
+<linearGradient id="unit" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#3D86FF"/><stop offset="1" stop-color="#1F5BD8"/></linearGradient>
+<linearGradient id="badge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB340"/><stop offset="1" stop-color="#FF8A00"/></linearGradient>
+<filter id="sh" filterUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#0B2A66" flood-opacity=".26"/></filter></defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<g filter="url(#sh)">
+<rect x="156" y="166" width="580" height="150" rx="42.00000000000001" fill="url(#unit)"/>
+<circle cx="219.0" cy="241.0" r="19.5" fill="#5BF08A"/>
+<circle cx="281.4" cy="241.0" r="19.5" fill="#5BF08A"/>
+<line x1="457.6" y1="214.0" x2="457.6" y2="268.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<line x1="549.9" y1="214.0" x2="549.9" y2="268.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<line x1="642.1" y1="214.0" x2="642.1" y2="268.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<path d="M198,169 H694" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="5" stroke-linecap="round"/>
+<rect x="156" y="350" width="580" height="150" rx="42.00000000000001" fill="url(#unit)"/>
+<circle cx="219.0" cy="425.0" r="19.5" fill="#5BF08A"/>
+<circle cx="281.4" cy="425.0" r="19.5" fill="#5BF08A"/>
+<line x1="457.6" y1="398.0" x2="457.6" y2="452.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<line x1="549.9" y1="398.0" x2="549.9" y2="452.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<line x1="642.1" y1="398.0" x2="642.1" y2="452.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<path d="M198,353 H694" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="5" stroke-linecap="round"/>
+<rect x="156" y="534" width="580" height="150" rx="42.00000000000001" fill="url(#unit)"/>
+<circle cx="219.0" cy="609.0" r="19.5" fill="#5BF08A"/>
+<circle cx="281.4" cy="609.0" r="19.5" fill="#FFB340"/>
+<line x1="457.6" y1="582.0" x2="457.6" y2="636.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<line x1="549.9" y1="582.0" x2="549.9" y2="636.0" stroke="#FFFFFF" stroke-width="16.5" stroke-linecap="round"/>
+<path d="M198,537 H694" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="5" stroke-linecap="round"/>
+</g>
+<circle cx="740" cy="730" r="156" fill="url(#bg)"/>
+<g filter="url(#sh)"><circle cx="740" cy="730" r="128" fill="url(#badge)"/></g>
+<path d="M740,668 V780 M690,732 L740,782 L790,732" fill="none" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

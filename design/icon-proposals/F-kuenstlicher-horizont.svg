@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#30353E"/><stop offset="1" stop-color="#111317"/></linearGradient>
+<linearGradient id="bezel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8A929F"/><stop offset="1" stop-color="#2A2E35"/></linearGradient>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F5BD8"/><stop offset="1" stop-color="#5AA2FF"/></linearGradient>
+<linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3242"/><stop offset="1" stop-color="#151A24"/></linearGradient>
+<clipPath id="face"><circle cx="512" cy="512" r="330"/></clipPath></defs>
+<rect width="1024" height="1024" fill="url(#bg)"/>
+<circle cx="512" cy="512" r="384" fill="url(#bezel)"/>
+<circle cx="512" cy="512" r="356" fill="#0B0D10"/>
+<g clip-path="url(#face)"><g transform="rotate(-9 512 512)">
+<rect x="0" y="0" width="1024" height="540" fill="url(#sky)"/>
+<rect x="0" y="540" width="1024" height="484" fill="url(#ground)"/>
+<line x1="457.0" y1="470" x2="567.0" y2="470" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="10" stroke-linecap="round"/>
+<line x1="417.0" y1="400" x2="607.0" y2="400" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="10" stroke-linecap="round"/>
+<line x1="457.0" y1="330" x2="567.0" y2="330" stroke="#FFFFFF" stroke-opacity=".75" stroke-width="10" stroke-linecap="round"/>
+<rect x="302" y="578" width="420" height="48" rx="14" fill="#3A4558"/>
+<circle cx="322.2" cy="602.0" r="6.2" fill="#34C759"/>
+<circle cx="342.1" cy="602.0" r="6.2" fill="#34C759"/>
+<line x1="520.4" y1="593.4" x2="520.4" y2="610.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<line x1="596.8" y1="593.4" x2="596.8" y2="610.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<line x1="673.2" y1="593.4" x2="673.2" y2="610.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<rect x="302" y="640" width="420" height="48" rx="14" fill="#3A4558"/>
+<circle cx="322.2" cy="664.0" r="6.2" fill="#34C759"/>
+<circle cx="342.1" cy="664.0" r="6.2" fill="#FF9F0A"/>
+<line x1="520.4" y1="655.4" x2="520.4" y2="672.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<line x1="596.8" y1="655.4" x2="596.8" y2="672.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<line x1="673.2" y1="655.4" x2="673.2" y2="672.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<rect x="302" y="702" width="420" height="48" rx="14" fill="#3A4558"/>
+<circle cx="322.2" cy="726.0" r="6.2" fill="#34C759"/>
+<circle cx="342.1" cy="726.0" r="6.2" fill="#34C759"/>
+<line x1="520.4" y1="717.4" x2="520.4" y2="734.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<line x1="596.8" y1="717.4" x2="596.8" y2="734.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<line x1="673.2" y1="717.4" x2="673.2" y2="734.6" stroke="#FFFFFF" stroke-width="5.3" stroke-linecap="round"/>
+<line x1="0" y1="540" x2="1024" y2="540" stroke="#FFFFFF" stroke-width="12"/>
+</g></g>
+<polygon points="512,168 488,214 536,214" fill="#FF9F0A"/>
+<path d="M302,520 H432 L470,560 M722,520 H592 L554,560" fill="none" stroke="#FF9F0A" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="512" cy="520" r="22" fill="#FF9F0A"/>
+</svg>
