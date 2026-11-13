@@ -1,0 +1,1 @@
+Status, updates, containers, VMs and backups of all your Synology NAS and Proxmox hosts – in one native app. No account, no tracking, no relay.

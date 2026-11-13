@@ -4,6 +4,7 @@ import SnapshotsFeature
 import ContainersFeature
 import ControlPanelFeature
 import DashboardFeature
+import DemoBackend
 import DesignSystem
 import Domain
 import FilesFeature
@@ -151,6 +152,7 @@ struct MainSplitView: View {
                 if manager.profile(id) != nil { selection = .server(id) }
             }
         }
+        .task { await openScreenshotScreen() }
         // Overview polls every 30 s while the app is active.
         .task(id: scenePhase) {
             guard scenePhase == .active else { return }
@@ -201,6 +203,33 @@ struct MainSplitView: View {
         }
     }
 
+    /// Debug builds only: opens the screen that `-screenshot` asked for.
+    private func openScreenshotScreen() async {
+        guard let screen = app.screenshotScreen else { return }
+        let target: (SidebarItem, ServerSection?) = switch screen {
+        case .welcome, .overview: (.all, nil)
+        case .updates: (.updates, nil)
+        case .notifications: (.notifications, nil)
+        case .server: (.server(DemoData.homeID), nil)
+        case .dashboard: (.server(DemoData.homeID), .dashboard)
+        case .containers: (.server(DemoData.homeID), .containers)
+        case .files: (.server(DemoData.homeID), .files)
+        case .packages: (.server(DemoData.homeID), .packages)
+        case .backup: (.server(DemoData.homeID), .backup)
+        case .guests: (.server(DemoData.proxmoxID), .virtualMachines)
+        }
+        // Wait for the demo servers to connect (one of them stays unreachable), so the sections are there.
+        for _ in 0..<40 where manager.profiles.filter({ manager.runtime[$0.id]?.state.isConnected == true }).count < 3 {
+            try? await Task.sleep(for: .milliseconds(250))
+        }
+        try? await Task.sleep(for: .milliseconds(500))
+        selection = target.0
+        guard let section = target.1 else { return }
+        // `onChange(of: selection)` resets the section first.
+        try? await Task.sleep(for: .milliseconds(600))
+        self.section = section
+    }
+
     // MARK: Columns
 
     private var sidebar: some View {
@@ -240,7 +269,7 @@ struct MainSplitView: View {
                 }
             }
         }
-        .navigationTitle(manager.isDemo ? "Demo" : "NAS Cockpit")
+        .navigationTitle(manager.isDemo && app.screenshotScreen == nil ? "Demo" : "NAS Cockpit")
         .refreshable {
             await manager.connectAll()
             await manager.refreshOverview()
@@ -254,7 +283,7 @@ struct MainSplitView: View {
                 ActivityButton(operations: manager.operations) { showActivity = true }
             }
             ToolbarItem(placement: .primaryAction) {
-                if manager.isDemo {
+                if manager.isDemo, app.screenshotScreen == nil {
                     Button("Exit Demo") { Task { await app.exitDemo() } }
                 } else {
                     Button("Add Server", systemImage: "plus") { showAddServer = true }

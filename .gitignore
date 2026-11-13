@@ -10,3 +10,7 @@ Packages/*/.build/
 Config/Secrets.xcconfig
 *.ipa
 CLAUDE.local.md
+
+# App Store screenshots (about 60 MB; regenerate with AppStore/Tools)
+AppStore/Screenshots/
+AppStore/metadata/review_information/phone_number.txt

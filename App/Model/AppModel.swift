@@ -16,6 +16,11 @@ enum AppConstants {
     static let urlScheme = "nascockpit"
 }
 
+/// Screens for the App Store screenshots, started with `-screenshot <name>` (Debug builds only).
+enum ScreenshotScreen: String {
+    case welcome, overview, updates, notifications, server, dashboard, containers, backup, guests, files, packages
+}
+
 /// Where a tapped notification or widget wants to go.
 enum AppRoute: Hashable {
     case server(ServerID)
@@ -105,6 +110,9 @@ final class AppModel {
         }
     }
 
+    /// Only set by `-screenshot` in Debug builds: the demo then looks like the real app (no "Demo" title).
+    private(set) var screenshotScreen: ScreenshotScreen?
+
     var activeManager: ConnectionManager { demo ?? live }
     var isDemoActive: Bool { demo != nil }
 
@@ -115,6 +123,14 @@ final class AppModel {
         // Lets the simulator test notification taps without adding a server first.
         if ProcessInfo.processInfo.arguments.contains("-requestNotifications") {
             _ = await BackgroundRefresh.requestNotificationPermission()
+        }
+        // App Store screenshots: the demo opened at one screen, see `ScreenshotScreen` and AppStore/Tools.
+        if let index = ProcessInfo.processInfo.arguments.firstIndex(of: "-screenshot"),
+           ProcessInfo.processInfo.arguments.indices.contains(index + 1),
+           let screen = ScreenshotScreen(rawValue: ProcessInfo.processInfo.arguments[index + 1]) {
+            screenshotScreen = screen
+            if screen != .welcome { await startDemo() }
+            return
         }
         // Shows the sign-in prompts with demo data: `-demoPrompt password` or `-demoPrompt otp`.
         if let index = ProcessInfo.processInfo.arguments.firstIndex(of: "-demoPrompt"),

@@ -1,0 +1,29 @@
+No account, no login to any service of ours, no user-generated content, no In-App Purchases. The app is a client for servers the user runs at home (Synology NAS, Proxmox VE). Because reviewers have no such server, the app has a built-in demo with fictional servers.
+
+PURPOSE AND AUDIENCE
+Free companion app for people who run a Synology NAS or a Proxmox VE server at home or in a small office. It shows status, updates, containers, backups and logs of all their servers on one screen and lets them run the usual admin tasks (install updates, start/stop containers and VMs, start a backup). The developer runs no servers; the app only connects to the user's own servers.
+
+HOW TO TEST (no credentials needed)
+1. Launch the app and tap "Try the Demo".
+2. The overview "All NAS" shows four fictional servers: three Synology NAS (one of them unreachable on purpose) and one Proxmox host.
+3. Tap "Updates" in the sidebar to see all updates across servers; select some and tap "Update" (simulated).
+4. Tap "Home NAS" for its sections: Dashboard, Packages, Containers, File Station, Hyper Backup, Logs and Control Panel.
+5. Tap "Proxmox Lab" and "VMs & Containers" to start or stop a guest (simulated).
+6. Destructive actions (restart, shut down, delete) ask for Face ID first; in the simulator use Features → Face ID → Matching Face.
+7. "Exit Demo" (top right) returns to the welcome screen.
+All demo data is generated on the device; nothing is sent anywhere.
+
+PERMISSIONS
+- Local Network: to reach the NAS in the user's home network.
+- Face ID: to unlock saved credentials and to confirm critical actions.
+- Notifications (only if the user turns on background refresh in Settings): local notifications about storage problems, new updates, crashed containers and failed backups.
+
+EXTERNAL SERVICES
+- The user's own Synology DSM and Proxmox VE servers, over HTTPS (HTTP is only allowed for private network addresses).
+- Apple CloudKit, optional: the user's private database for syncing server profiles (end-to-end encrypted fields). Passwords and tokens are never synced.
+- Background App Refresh to check the servers and post local notifications.
+- "Open Shell" opens a third-party terminal app chosen by the user via its URL scheme.
+No analytics, ads, tracking or third-party SDKs.
+
+THIRD-PARTY TRADEMARKS
+NAS Cockpit is an independent app and says so on the welcome screen and in the description. It is not affiliated with Synology Inc. or Proxmox Server Solutions GmbH. It uses the public web APIs of DSM and Proxmox VE that these products offer to clients. Screenshots show fictional demo servers.

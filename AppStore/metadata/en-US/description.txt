@@ -1,0 +1,41 @@
+NAS Cockpit brings every Synology NAS and Proxmox host you run into one native app for iPhone and iPad. Instead of signing in to each web interface and pinching and zooming on a touch screen, you see at a glance what's running, what needs an update and which backup failed.
+
+EVERY SERVER ON ONE SCREEN
+• CPU, RAM and storage of every server, with warnings right where you see them.
+• All updates in one list: packages, DSM and Proxmox host updates. Select several and install them in one go – one after another per server, in parallel across servers.
+• Optional notifications for storage problems, new updates, crashed containers and failed backups. Plus DSM's own notifications, for all servers in one list.
+• Home Screen widgets for server status and open updates.
+• Wake-on-LAN: wake a sleeping server, and the app reconnects on its own.
+• iCloud sync: your servers show up on all your devices, end-to-end encrypted in your own iCloud. Passwords never leave the device.
+
+SYNOLOGY DSM 7.2 AND LATER
+• Live dashboard: load, network, temperature, volumes and drives.
+• Package Center: update, start, stop. DSM updates with restart monitoring.
+• Container Manager: containers and Compose projects, with logs.
+• File Station: browse, copy, move, create folders, delete.
+• Hyper Backup: tasks, destination status and Back Up Now. Plus Snapshot Replication.
+• Virtual Machine Manager, Control Panel (users, SSH, update policy, restart and shut down) and logs by source.
+
+PROXMOX VE
+• Sign in with password and TOTP, an API token or OpenID Connect – passkeys work.
+• VMs and containers across the cluster: start, shut down, stop, reboot, snapshots.
+• Backup jobs with Back Up Now, host updates, journal and sign-in log.
+• Open Shell hands the host or guest over to your terminal app, such as WebSSH, Termius, Blink or Prompt.
+
+SECURITY FIRST
+Admin credentials for your NAS are about as sensitive as it gets. So:
+• Certificate pinning: self-signed certificates work without turning off TLS checks.
+• Passwords, API tokens and two-factor device tokens are kept only in this device's keychain.
+• Face ID before critical actions such as restart, shut down or delete – independent of the optional app lock.
+• Plain HTTP only inside your own network. On the go, use a VPN such as WireGuard or Tailscale.
+• No QuickConnect, no relay, no analytics: the app only talks to your own servers.
+• Writes are never retried automatically, so a flaky connection can't run an action twice.
+
+FREE AND OPEN
+No account, no ads, no tracking, no in-app purchases. The source code is on GitHub. No server at hand? Try everything in the demo.
+
+GOOD TO KNOW
+• You need a Synology NAS with DSM 7.2 or later or a Proxmox VE server.
+• The server has to be reachable from your iPhone or iPad, at home or through a VPN.
+
+NAS Cockpit is an independent app. It is not affiliated with or endorsed by Synology Inc. or Proxmox Server Solutions GmbH. Synology and DSM are trademarks of Synology Inc. Proxmox is a trademark of Proxmox Server Solutions GmbH.
