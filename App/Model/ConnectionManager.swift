@@ -95,7 +95,7 @@ final class ConnectionManager {
         let id = operation.serverID
         guard backends[id] != nil else { return }
         switch operation.kind {
-        case .fileTransfer, .fileDelete, .backup, .snapshot, .replicationSync, .guestSnapshot:
+        case .fileTransfer, .fileDelete, .backup, .snapshot, .replicationSync, .guestSnapshot, .securityScan:
             return
         case .power(.shutDown):
             await refreshSnapshot(id)

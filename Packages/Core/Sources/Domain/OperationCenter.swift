@@ -23,6 +23,7 @@ public final class OperationCenter {
         case backup(BackupControl, taskID: String)
         case snapshot(share: String)
         case replicationSync(planID: String)
+        case securityScan
     }
 
     public enum Status: Hashable, Sendable {

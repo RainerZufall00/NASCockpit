@@ -117,6 +117,12 @@ public protocol ServerBackend: Actor {
     func replicationPlans() async throws -> [ReplicationPlan]
     /// Returns once the NAS accepted the request; the sync runs on the NAS.
     func syncReplication(_ planID: String) async throws
+
+    // MARK: Security Advisor
+    /// Result of the last scan, or the progress of the one that is running.
+    func securityReport() async throws -> SecurityScanReport
+    /// Returns once the NAS accepted the request; the scan runs on the NAS.
+    func startSecurityScan() async throws
 }
 
 public extension ServerBackend {
@@ -128,4 +134,6 @@ public extension ServerBackend {
     }
     func rollback(_ guest: VirtualGuest, to snapshot: String, progress: @escaping ProgressHandler) async throws { throw BackendError.notSupported }
     func deleteSnapshot(_ snapshot: String, of guest: VirtualGuest, progress: @escaping ProgressHandler) async throws { throw BackendError.notSupported }
+    func securityReport() async throws -> SecurityScanReport { throw BackendError.notSupported }
+    func startSecurityScan() async throws { throw BackendError.notSupported }
 }

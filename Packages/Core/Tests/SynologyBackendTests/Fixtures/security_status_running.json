@@ -1,0 +1,8 @@
+{"success":true,"data":{
+ "items":{
+  "malware":{"category":"malware","fail":{"danger":0,"info":0,"outOfDate":0,"risk":0,"warning":0},"failSeverity":"safe","progress":100,"runningItem":"","total":3,"waitNum":0},
+  "network":{"category":"network","fail":{},"failSeverity":"safe","progress":40,"runningItem":"checkSSHPort","total":4,"waitNum":2},
+  "update":{"category":"update","fail":{},"failSeverity":"safe","progress":0,"runningItem":"","total":4,"waitNum":4}
+ },
+ "lastScanTime":"1794103201","startTime":"1794200000","success":true,"sysProgress":45,"sysStatus":"safe"
+}}

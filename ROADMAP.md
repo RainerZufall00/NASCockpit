@@ -16,6 +16,10 @@ Erst prüfen, dann weitere Funktionen darauf aufbauen.
 - [ ] Proxmox: Anmeldung mit Zwei-Faktor-Code (`NeedTFA` / `tfa-challenge`).
 - [ ] Proxmox: Backup-Liste und "Back Up Now" mit echten Jobs.
 - [ ] Mitteilungen im Hintergrund auf dem iPhone (iOS entscheidet über den Zeitpunkt).
+- [ ] Sicherheitsberater: Status (`SYNO.Core.SecurityScan.Status` `system_get`) gegen DSM 7.2, auch während
+  eines laufenden Scans (`sysProgress`, `startTime`, `runningItem`).
+- [ ] Sicherheitsberater: Liste der Prüfungen (`rule_get` mit `items=ALL`): Form der Antwort und lesbare Titel.
+- [ ] Sicherheitsberater: Scan starten (`SYNO.Core.SecurityScan.Operation` `start`, sonst `specific_start`).
 
 ## Hoher Nutzen
 
@@ -53,6 +57,11 @@ Erst prüfen, dann weitere Funktionen darauf aufbauen.
 - [ ] **Aufgaben**: laufende und letzte Aufgaben mit Protokoll, wie unten in der Proxmox-Weboberfläche.
 - [ ] **Diagramme pro Gast**: Verlauf von CPU, RAM und Netzwerk (`rrddata` je Gast).
 - [ ] **Proxmox Backup Server** als eigener Servertyp: Datastores, Belegung, Verify- und Prune-Jobs.
+
+- [x] **Sicherheitsberater**: Ergebnis des letzten Scans je Kategorie, nicht bestandene Prüfungen und
+  "Scan Now" mit Fortschritt.
+  - [ ] Mitteilung, wenn ein Scan neue Risiken findet (Hintergrundaktualisierung).
+  - [ ] Sicherheitsstatus aller NAS in der Übersicht.
 
 ## Für beide Plattformen
 

@@ -8,6 +8,8 @@ public enum Capability: String, Codable, Sendable, CaseIterable {
     case guestSnapshots
     /// The NAS's own notification list.
     case notifications
+    /// DSM Security Advisor: scan results and "Scan Now".
+    case securityAdvisor
     // Control Panel areas, each detected separately.
     case updateSettings, users, terminal, power, connections
 }

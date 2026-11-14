@@ -11,6 +11,7 @@ import FilesFeature
 import InboxFeature
 import LogsFeature
 import PackagesFeature
+import SecurityAdvisorFeature
 import UpdatesFeature
 import VirtualMachinesFeature
 
@@ -22,7 +23,7 @@ enum SidebarItem: Hashable {
 }
 
 enum ServerSection: String, CaseIterable, Identifiable, Hashable {
-    case dashboard, virtualMachines, packages, containers, files, backup, snapshots, logs, controlPanel
+    case dashboard, virtualMachines, packages, containers, files, backup, snapshots, security, logs, controlPanel
 
     var id: Self { self }
 
@@ -35,6 +36,7 @@ enum ServerSection: String, CaseIterable, Identifiable, Hashable {
         case .files: "File Station"
         case .backup: kind == .proxmox ? "Backups" : "Hyper Backup"
         case .snapshots: "Snapshot Replication"
+        case .security: "Security Advisor"
         case .logs: "Logs"
         case .controlPanel: kind == .proxmox ? "Host" : "Control Panel"
         }
@@ -49,6 +51,7 @@ enum ServerSection: String, CaseIterable, Identifiable, Hashable {
         case .files: "folder"
         case .backup: "clock.arrow.circlepath"
         case .snapshots: "camera.on.rectangle"
+        case .security: "checkmark.shield"
         case .logs: "list.bullet.rectangle"
         case .controlPanel: "slider.horizontal.3"
         }
@@ -64,6 +67,7 @@ enum ServerSection: String, CaseIterable, Identifiable, Hashable {
         case .files: "folder.fill"
         case .backup: "clock.arrow.circlepath"
         case .snapshots: "camera.on.rectangle.fill"
+        case .security: "checkmark.shield.fill"
         case .logs: "list.bullet.rectangle.fill"
         case .controlPanel: "slider.horizontal.3"
         }
@@ -78,6 +82,7 @@ enum ServerSection: String, CaseIterable, Identifiable, Hashable {
         case .files: .cyan
         case .backup: .green
         case .snapshots: .teal
+        case .security: .red
         case .logs: .gray
         case .controlPanel: .indigo
         }
@@ -92,6 +97,7 @@ enum ServerSection: String, CaseIterable, Identifiable, Hashable {
         case .files: "Browse, copy, move and delete"
         case .backup: kind == .proxmox ? "Backup jobs, last runs, back up now" : "Backup tasks, back up now"
         case .snapshots: "Snapshots and replication"
+        case .security: "Scan results, scan now"
         case .logs: kind == .proxmox ? "Journal and sign-ins" : "System and connection logs"
         case .controlPanel: kind == .proxmox ? "Restart and shut down" : "Updates, accounts, SSH, power"
         }
@@ -106,6 +112,7 @@ enum ServerSection: String, CaseIterable, Identifiable, Hashable {
         case .files: .files
         case .backup: .backup
         case .snapshots: .snapshots
+        case .security: .securityAdvisor
         case .logs: .logs
         case .controlPanel: .settings
         }
@@ -340,6 +347,8 @@ struct MainSplitView: View {
                                    product: profile.backend == .proxmox ? .proxmox : .hyperBackup)
                     case .snapshots:
                         SnapshotsView(backend: backend, serverName: profile.name, capabilities: manager.runtime[id]?.capabilities ?? [])
+                    case .security:
+                        SecurityAdvisorView(backend: backend, serverName: profile.name)
                     case .logs:
                         LogsView(backend: backend, sources: (manager.runtime[id]?.capabilities.contains(.backupLogs) ?? false)
                                  ? [.system, .connection, .backup] : [.system, .connection],

@@ -1,0 +1,6 @@
+{"success":true,"data":{"items":{
+ "securityscan:rule_ssh_default_port":{"category":"network","status":"fail","failSeverity":"warning"},
+ "checkAdminDisabled":{"category":"userInfo","status":"pass","failSeverity":"risk"},
+ "pkg_outdated":{"category":"update","status":"fail","failSeverity":"outOfDate","title":"Package updates available"},
+ "rule_quickconnect":{"category":"network","status":"skip"}
+}}}

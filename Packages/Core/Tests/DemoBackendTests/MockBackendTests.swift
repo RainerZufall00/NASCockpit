@@ -148,4 +148,22 @@ struct MockBackendTests {
         try await backend.syncReplication("plan-photo")
         #expect(try await backend.replicationPlans().first { $0.id == "plan-photo" }?.isSyncing == true)
     }
+
+    @Test func demoSecurityScan() async throws {
+        let backend = MockBackend(spec: DemoData.servers[0], latency: .zero, startConnected: true, actionDuration: 1)
+        let before = try await backend.securityReport()
+        #expect(before.hasBeenScanned && !before.isScanning)
+        #expect(before.issueCount == 2)
+        #expect(before.findings.first?.severity == .warning)
+
+        try await backend.startSecurityScan()
+        let running = try await backend.securityReport()
+        #expect(running.isScanning)
+        #expect(running.progress == 0)
+    }
+
+    @Test func proxmoxHasNoSecurityAdvisor() async throws {
+        let backend = MockBackend(spec: DemoData.spec(for: DemoData.proxmoxID)!, latency: .zero, startConnected: true)
+        await #expect(throws: BackendError.notSupported) { try await backend.securityReport() }
+    }
 }

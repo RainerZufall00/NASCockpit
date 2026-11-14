@@ -612,6 +612,31 @@ public actor SynologyBackend: ServerBackend {
         }
     }
 
+    // MARK: Security Advisor
+
+    public func securityReport() async throws -> SecurityScanReport {
+        try await read {
+            let status = try await self.connection.call(DSMEndpoints.SecurityScan.status)
+            // The rule list is optional: without it the counts per category are still right.
+            var rules: SecurityRulesDTO?
+            if status.lastScanTime != nil {
+                rules = try? await self.connection.call(DSMEndpoints.SecurityScan.rules)
+            }
+            return DSMMapping.securityReport(status, rules: rules)
+        }
+    }
+
+    public func startSecurityScan() async throws {
+        try await write(.securityScan) {
+            do {
+                _ = try await self.connection.call(DSMEndpoints.SecurityScan.start)
+            } catch DSMError.unsupported {
+                // Method name differs between DSM releases (see DSMSecurityEndpoints.swift).
+                _ = try await self.connection.call(DSMEndpoints.SecurityScan.specificStart)
+            }
+        }
+    }
+
     private func read<T: Sendable>(_ body: () async throws -> T) async throws -> T {
         do {
             return try await body()

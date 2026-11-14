@@ -59,6 +59,8 @@ final class FakeDSM: HTTPTransport, Sendable {
         var backupTargetsOffline: Set<String> = []
         /// After `backup`, task 3 ("Offsite") reports a failed run instead of starting.
         var backupFailsAfterStart = false
+        /// Security Advisor reports a running scan.
+        var securityScanRunning = false
         /// Error code for log queries that carry any of `rejectedLogParameters` (like DSM 7.2 answering 5017).
         var rejectsFilteredLogs: Int?
         var rejectedLogParameters: Set<String> = ["target"]
@@ -227,6 +229,12 @@ final class FakeDSM: HTTPTransport, Sendable {
                     return .data(params["name"] == "home" ? Fixture.error(400) : Fixture.data("snapshot_list"))
                 case ("SYNO.DR.Plan", "list"):
                     return .data(Fixture.data("dr_plans"))
+                case ("SYNO.Core.SecurityScan.Status", "system_get"):
+                    return .data(Fixture.data(state.config.securityScanRunning ? "security_status_running" : "security_status"))
+                case ("SYNO.Core.SecurityScan.Status", "rule_get"):
+                    return .data(Fixture.data("security_rules"))
+                case ("SYNO.Core.SecurityScan.Operation", "start"), ("SYNO.Core.SecurityScan.Operation", "specific_start"):
+                    return .data(Fixture.ok)
                 case ("SYNO.Virtualization.API.Guest.Action", "shutdown"), ("SYNO.Virtualization.API.Guest.Action", "poweroff"):
                     state.vmmLists = 0
                     state.vmmShutDown.insert((params["guest_id"] ?? "").trimmingCharacters(in: CharacterSet(charactersIn: "\"")))

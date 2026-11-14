@@ -22,7 +22,7 @@ Packages/Core/          Local Swift package
   DemoBackend/          MockBackend for demo mode, previews and screenshots
   DesignSystem/         Tiles, usage bars, formatting, operation status and activity sheet
   DashboardFeature/ PackagesFeature/ UpdatesFeature/ ContainersFeature/ LogsFeature/
-  ControlPanelFeature/ FilesFeature/ BackupFeature/ SnapshotsFeature/ InboxFeature/
+  ControlPanelFeature/ FilesFeature/ BackupFeature/ SnapshotsFeature/ InboxFeature/ SecurityAdvisorFeature/
   VirtualMachinesFeature/   VMs and containers (Proxmox) / Virtual Machine Manager (DSM)
 ```
 
@@ -229,6 +229,25 @@ A second adapter (`ProxmoxBackend`) behind the same `ServerBackend` protocol. Ad
 Must be verified against a real host: the exact `NeedTFA` / `tfa-challenge` login shape, `next-run` in
 `/cluster/backup`, `/lxc/{vmid}/interfaces`, and which vzdump job settings a given PVE release accepts in
 `/nodes/{node}/vzdump`. The fixtures in `Tests/ProxmoxBackendTests/Fixtures` are synthetic.
+
+### Security Advisor (DSM)
+
+Detected through `SYNO.Core.SecurityScan.Status`; the server page gets a "Security Advisor" section.
+
+- Overview: overall result (safe, info, out of date, warning, risk, danger), last scan, "x of y checks passed"
+  and one row per category (malware, system, security settings, accounts, network, updates) with its failed
+  checks per level. "Info" counts as a note, not as an issue.
+- Findings: the failed checks from `rule_get` (`items=ALL`), most severe first. DSM names rules with UI string
+  keys, so the app shows them in a readable form unless DSM sends real text. Without a usable rule list the
+  page shows the counts per category and points to DSM.
+- "Scan Now": `SYNO.Core.SecurityScan.Operation` `start` (POST, never retried); when DSM says the method does
+  not exist, `specific_start` with `items=ALL`. The scan runs on the NAS; the page polls every 3 s while it
+  runs (and for 20 s after the start, until DSM reports it) and shows the progress per category.
+  A 105 hides the button for that NAS. The app does not change any Security Advisor settings.
+- Status shape (`sysStatus`, `sysProgress`, `lastScanTime`, `startTime`, `items.<category>` with `total`,
+  `fail.<level>`, `failSeverity`, `progress`, `runningItem`, `waitNum`) follows the py-synologydsm-api test data
+  (DSM 6, used by Home Assistant). `rule_get` and the start call come from the synology-api library without an
+  example answer. All three are UNVERIFIED against DSM 7.2.
 
 ### Synology Virtual Machine Manager
 

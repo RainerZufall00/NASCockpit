@@ -8,6 +8,10 @@ Exception: `dsm_notify.json` is a response captured from a real DSM 7 (2026-11),
 (host, addresses, task, user and container names replaced). Its last item is synthetic and only
 exercises the fallback for unknown event tags.
 
+`security_status.json` follows the shape of the DSM 6 test data in py-synologydsm-api (used by Home
+Assistant), with made-up results. `security_status_running.json` and `security_rules.json` are guesses: no
+example answer for a running scan or for `rule_get` is published.
+
 Before release, replace each file with an anonymized response captured from a real
 DSM 7.2+ (browser dev tools → Network → `entry.cgi`). Remove serial numbers, MAC
 addresses, IPs, host names, user names and paths.

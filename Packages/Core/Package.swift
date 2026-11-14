@@ -30,6 +30,7 @@ let package = Package(
                 "SnapshotsFeature",
                 "InboxFeature",
                 "VirtualMachinesFeature",
+                "SecurityAdvisorFeature",
             ]
         ),
         // What the widget extension needs: the status cache and the shared look. No networking, no Keychain.
@@ -74,6 +75,8 @@ let package = Package(
         .target(name: "InboxFeature", dependencies: ["Domain", "DesignSystem", "DemoBackend"]),
         // Proxmox: virtual machines and containers.
         .target(name: "VirtualMachinesFeature", dependencies: ["Domain", "DesignSystem", "DemoBackend"]),
+        // DSM Security Advisor: scan results and "Scan Now".
+        .target(name: "SecurityAdvisorFeature", dependencies: ["Domain", "DesignSystem", "DemoBackend"]),
 
         .testTarget(
             name: "NetworkingTests",

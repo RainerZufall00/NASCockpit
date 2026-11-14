@@ -31,6 +31,8 @@ public actor MockBackend: ServerBackend {
     private var snapshotShares: [ShareSnapshots] = DemoData.shareSnapshots()
     private var plans: [ReplicationPlan] = DemoData.replicationPlans()
     private var syncRuns: [String: Int] = [:]
+    private var security: SecurityScanReport
+    private var securityRuns = 0
     /// Bumped on every start / cancel so an older simulated run stops updating.
     private var backupRuns: [String: Int] = [:]
 
@@ -45,6 +47,7 @@ public actor MockBackend: ServerBackend {
         projectList = spec.projects
         guestList = spec.guests
         backups = spec.profile.backend == .proxmox ? DemoData.proxmoxBackupTasks() : DemoData.backupTasks()
+        security = DemoData.securityReport(for: spec.profile.id)
         isConnected = startConnected && !spec.isOffline
         isOffline = spec.isOffline
         serverID = spec.profile.id
@@ -579,6 +582,52 @@ public actor MockBackend: ServerBackend {
             }
             plans[index].progress = Double(step) / 20
         }
+    }
+
+    // MARK: Security Advisor
+
+    public func securityReport() async throws -> SecurityScanReport {
+        try requireConnection()
+        guard spec.capabilities.contains(.securityAdvisor) else { throw BackendError.notSupported }
+        try await Task.sleep(for: latency)
+        return security
+    }
+
+    public func startSecurityScan() async throws {
+        try requireConnection()
+        guard spec.capabilities.contains(.securityAdvisor) else { throw BackendError.notSupported }
+        try await simulate(seconds: 0.5)
+        guard !security.isScanning else { return }
+        securityRuns += 1
+        let run = securityRuns
+        let result = DemoData.securityReport(for: spec.profile.id)
+        security.isScanning = true
+        security.progress = 0
+        for index in security.groups.indices {
+            security.groups[index].progress = 0
+            security.groups[index].isRunning = true
+        }
+        Task { await self.runSecurityScan(run: run, result: result) }
+    }
+
+    /// Simulated scan: one category after the other, then the stored result with a fresh date.
+    private func runSecurityScan(run: Int, result: SecurityScanReport) async {
+        let steps = max(1, security.groups.count) * 4
+        for step in 1...steps {
+            try? await Task.sleep(for: .seconds(0.6 * actionDuration))
+            guard securityRuns == run else { return }
+            let done = Double(step) / Double(steps)
+            security.progress = done
+            for index in security.groups.indices {
+                let share = 1 / Double(security.groups.count)
+                let groupProgress = min(1, max(0, (done - Double(index) * share) / share))
+                security.groups[index].progress = groupProgress
+                security.groups[index].isRunning = groupProgress < 1
+            }
+        }
+        var finished = result
+        finished.lastScan = .now
+        security = finished
     }
 
     private func copySubtree(from item: FileItem, to newPath: String) {

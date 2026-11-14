@@ -46,6 +46,7 @@ written down instead of hidden.
 - Container Manager: containers and Compose projects, logs
 - File Station: browse, copy, move, create folders, delete
 - Hyper Backup: tasks, destination status, *Back Up Now* · Snapshot Replication
+- Security Advisor: result of the last scan per category, failed checks, *Scan Now* with live progress
 - Virtual Machine Manager, Control Panel (users, SSH, update policy, restart/shutdown), logs by source
 
 **Proxmox VE**

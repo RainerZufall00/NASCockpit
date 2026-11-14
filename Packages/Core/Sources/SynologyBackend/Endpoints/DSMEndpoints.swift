@@ -166,5 +166,6 @@ enum DSMEndpoints {
         (.snapshots, Snapshot.api),
         (.replication, Replication.api),
         (.notifications, Notify.api),
+        (.securityAdvisor, SecurityScan.statusAPI),
     ]
 }

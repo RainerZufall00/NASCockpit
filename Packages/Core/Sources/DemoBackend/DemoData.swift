@@ -63,7 +63,7 @@ public enum DemoData {
             ],
             systemUpdate: nil,
             isOffline: false,
-            capabilities: [.dashboard, .packages, .systemUpdate, .logs, .containers, .files, .settings, .updateSettings, .users, .terminal, .power, .connections, .backup, .backupLogs, .snapshots, .replication, .notifications, .vms],
+            capabilities: [.dashboard, .packages, .systemUpdate, .logs, .containers, .files, .settings, .updateSettings, .users, .terminal, .power, .connections, .backup, .backupLogs, .snapshots, .replication, .notifications, .securityAdvisor, .vms],
             containers: [
                 ContainerItem(name: "homeassistant", image: "ghcr.io/home-assistant/home-assistant:stable", status: .running, startedAt: .now.addingTimeInterval(-86_400 * 6), cpuPercent: 3.2, memoryBytes: 612 * 1_048_576, projectName: "smarthome"),
                 ContainerItem(name: "mosquitto", image: "eclipse-mosquitto:2", status: .running, startedAt: .now.addingTimeInterval(-86_400 * 6), cpuPercent: 0.1, memoryBytes: 9 * 1_048_576, projectName: "smarthome"),
@@ -109,7 +109,7 @@ public enum DemoData {
             ],
             systemUpdate: "DSM 7.2.2-72806 Update 3",
             isOffline: false,
-            capabilities: [.dashboard, .packages, .systemUpdate, .logs, .containers, .files, .settings, .updateSettings, .users, .terminal, .power, .connections, .backup, .backupLogs, .snapshots, .replication, .notifications],
+            capabilities: [.dashboard, .packages, .systemUpdate, .logs, .containers, .files, .settings, .updateSettings, .users, .terminal, .power, .connections, .backup, .backupLogs, .snapshots, .replication, .notifications, .securityAdvisor],
             containers: [
                 ContainerItem(name: "gitea", image: "gitea/gitea:1.22", status: .running, startedAt: .now.addingTimeInterval(-86_400 * 30), cpuPercent: 1.8, memoryBytes: 240 * 1_048_576, projectName: "devtools"),
                 ContainerItem(name: "gitea-db", image: "postgres:16", status: .running, startedAt: .now.addingTimeInterval(-86_400 * 30), cpuPercent: 0.9, memoryBytes: 180 * 1_048_576, projectName: "devtools"),
@@ -347,6 +347,29 @@ public enum DemoData {
             ReplicationPlan(id: "plan-home", name: "home", partner: "office-nas", isSyncing: true, progress: 0.63,
                             lastSync: now.addingTimeInterval(-2 * 86_400), lastSyncSucceeded: true, nextSync: nil),
         ]
+    }
+
+    /// Security Advisor: the Home NAS has two findings, the others are clean.
+    static func securityReport(for id: ServerID, now: Date = .now) -> SecurityScanReport {
+        let clean = id != homeID
+        let lastScan = Calendar.current.date(bySettingHour: 4, minute: 12, second: 0, of: now.addingTimeInterval(clean ? -86_400 : -2 * 86_400)) ?? now
+        let findings: [SecurityFinding] = clean ? [] : [
+            SecurityFinding(id: "ssh-default-port", group: "network", title: "SSH uses the default port 22", severity: .warning),
+            SecurityFinding(id: "package-updates", group: "update", title: "Package updates are available", severity: .outOfDate),
+        ]
+        func failures(_ group: String) -> [SecuritySeverity: Int] {
+            Dictionary(findings.filter { $0.group == group }.map { ($0.severity, 1) }, uniquingKeysWith: +)
+        }
+        func group(_ id: String, _ total: Int) -> SecurityCheckGroup {
+            let failed = failures(id)
+            return SecurityCheckGroup(id: id, total: total, failures: failed, severity: failed.keys.max() ?? .safe, progress: 1)
+        }
+        return SecurityScanReport(
+            overall: findings.map(\.severity).max() ?? .safe,
+            lastScan: lastScan,
+            groups: [group("malware", 3), group("systemCheck", 6), group("userInfo", 6), group("network", 4), group("update", 4)],
+            findings: findings
+        )
     }
 
     /// Folder tree: path → children. Files carry a size.

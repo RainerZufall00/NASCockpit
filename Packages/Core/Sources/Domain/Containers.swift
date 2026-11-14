@@ -89,6 +89,8 @@ public enum WriteAction: String, Sendable, Hashable, CaseIterable {
     case guestSnapshot
     /// Refresh the server's list of available updates (Proxmox `apt update`, DSM package catalog).
     case refreshCatalog
+    /// Start a Security Advisor scan (DSM).
+    case securityScan
 }
 
 /// Progress 0…1, or `nil` when the step has no measurable progress.

@@ -31,5 +31,7 @@
  "SYNO.FileStation.CreateFolder":{"path":"entry.cgi","minVersion":1,"maxVersion":2},
  "SYNO.FileStation.Delete":{"path":"entry.cgi","minVersion":1,"maxVersion":2},
  "SYNO.Virtualization.API.Guest":{"path":"entry.cgi","minVersion":1,"maxVersion":1},
- "SYNO.Virtualization.API.Guest.Action":{"path":"entry.cgi","minVersion":1,"maxVersion":1}
+ "SYNO.Virtualization.API.Guest.Action":{"path":"entry.cgi","minVersion":1,"maxVersion":1},
+ "SYNO.Core.SecurityScan.Status":{"path":"entry.cgi","minVersion":1,"maxVersion":1},
+ "SYNO.Core.SecurityScan.Operation":{"path":"entry.cgi","minVersion":1,"maxVersion":1}
 }}

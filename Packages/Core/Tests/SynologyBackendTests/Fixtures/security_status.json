@@ -1,0 +1,11 @@
+{"success":true,"data":{
+ "items":{
+  "malware":{"category":"malware","fail":{"danger":0,"info":0,"outOfDate":0,"risk":0,"warning":0},"failSeverity":"safe","progress":100,"runningItem":"","total":3,"waitNum":0},
+  "network":{"category":"network","fail":{"danger":0,"info":0,"outOfDate":0,"risk":0,"warning":1},"failSeverity":"warning","progress":100,"runningItem":"","total":4,"waitNum":0},
+  "securitySetting":{"category":"securitySetting","fail":{"danger":0,"info":0,"outOfDate":0,"risk":0,"warning":0},"failSeverity":"safe","progress":100,"runningItem":"","total":0,"waitNum":0},
+  "systemCheck":{"category":"systemCheck","fail":{"danger":0,"info":1,"outOfDate":0,"risk":0,"warning":0},"failSeverity":"info","progress":100,"runningItem":"","total":6,"waitNum":0},
+  "update":{"category":"update","fail":{"danger":0,"info":0,"outOfDate":2,"risk":0,"warning":0},"failSeverity":"outOfDate","progress":100,"runningItem":"","total":4,"waitNum":0},
+  "userInfo":{"category":"userInfo","fail":{"danger":0,"info":0,"outOfDate":0,"risk":0,"warning":0},"failSeverity":"safe","progress":100,"runningItem":"","total":6,"waitNum":0}
+ },
+ "lastScanTime":"1794103201","startTime":"","success":true,"sysProgress":100,"sysStatus":"warning"
+}}
