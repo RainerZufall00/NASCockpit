@@ -290,7 +290,7 @@ struct CertificateTrustView: View {
                     Label("The certificate of \(serverName) has changed", systemImage: "exclamationmark.shield.fill")
                         .font(.headline)
                         .foregroundStyle(.red)
-                    Text("This can be a renewed certificate – or someone intercepting the connection. Only continue if you changed the certificate on the NAS yourself. Compare the fingerprint with DSM (Control Panel → Security → Certificate).")
+                    Text("This can be a renewed certificate – or someone intercepting the connection. Only continue if you can confirm the new certificate: open the NAS in a browser on another device and compare the certificate’s SHA-256 fingerprint (padlock → certificate details), or, for a Let’s Encrypt certificate, look it up by name on crt.sh.")
                 } else {
                     Label("Confirm the certificate of \(serverName)", systemImage: "lock.shield")
                         .font(.headline)
@@ -299,10 +299,16 @@ struct CertificateTrustView: View {
             }
             .font(.subheadline)
 
-            Section("Certificate") {
+            Section {
                 LabeledContent("Subject", value: certificate.subject.isEmpty ? "–" : certificate.subject)
                 fingerprint("Public key (SPKI) SHA-256", certificate.spkiSHA256)
                 fingerprint("Certificate SHA-256", certificate.certificateSHA256)
+            } header: {
+                Text("Certificate")
+            } footer: {
+                if let name = certificate.publicName {
+                    Text("Issued for \(name) by a public certificate authority. Once you trust it, renewed certificates for \(name) are accepted automatically – also when the app connects by IP address.")
+                }
             }
 
             if let previousSPKI, !previousSPKI.isEmpty {

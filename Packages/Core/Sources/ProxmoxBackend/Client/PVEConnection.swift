@@ -118,8 +118,9 @@ actor PVEConnection {
 
     func trust(_ certificate: CertificateInfo) {
         profile.pinnedSPKI = certificate.spkiSHA256
-        transport.updatePinnedSPKI(certificate.spkiSHA256)
-        events.yield(.pinned(spki: certificate.spkiSHA256))
+        profile.trustedCertificateName = certificate.publicName
+        transport.updatePin(spki: certificate.spkiSHA256, trustedName: certificate.publicName)
+        events.yield(.pinned(spki: certificate.spkiSHA256, name: certificate.publicName))
     }
 
     /// The node to read host data from. Set after sign-in.

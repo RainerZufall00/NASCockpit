@@ -130,6 +130,7 @@ struct MainSplitView: View {
     @State private var showAddServer = false
     @State private var showSettings = false
     @State private var serverToRemove: ServerProfile?
+    @State private var serverToEdit: ServerProfile?
     @State private var showActivity = false
 
     var body: some View {
@@ -179,6 +180,9 @@ struct MainSplitView: View {
         }
         .sheet(isPresented: $showAddServer) {
             AddServerView(manager: manager)
+        }
+        .sheet(item: $serverToEdit) { profile in
+            ServerEditView(manager: manager, profile: profile)
         }
         .sheet(isPresented: $showSettings) {
             SettingsView()
@@ -268,6 +272,9 @@ struct MainSplitView: View {
                             }
                         }
                         if !manager.isDemo {
+                            Button("Edit…", systemImage: "pencil") {
+                                serverToEdit = profile
+                            }
                             Button("Remove…", systemImage: "trash", role: .destructive) {
                                 serverToRemove = profile
                             }
@@ -434,9 +441,20 @@ struct ServerSectionsView: View {
         .sheet(isPresented: $showWakeSetup) {
             WakeOnLANSetupView(manager: manager, profile: profile)
         }
+        .sheet(isPresented: $showEdit) {
+            ServerEditView(manager: manager, profile: profile)
+        }
+        .toolbar {
+            if !manager.isDemo {
+                ToolbarItem(placement: .secondaryAction) {
+                    Button("Edit Server", systemImage: "pencil") { showEdit = true }
+                }
+            }
+        }
     }
 
     @State private var showWakeSetup = false
+    @State private var showEdit = false
 
     private var shellHost: String? { profile.shellHost }
 

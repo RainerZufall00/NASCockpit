@@ -18,7 +18,7 @@ public enum BackendEvent: Sendable, Hashable {
     /// The address that answered with a matching certificate. Persist as "last reached".
     case addressReached(UUID)
     /// The user confirmed a certificate. Persist into the profile.
-    case pinned(spki: String)
+    case pinned(spki: String, name: String?)
     case loggedIn(LoginInfo)
     /// DSM ended the session because of a duplicate login (error 107).
     case sessionInterrupted

@@ -100,7 +100,7 @@ final class FakeDSM: HTTPTransport, Sendable {
     var loginCount: Int { state.withLock { $0.logins } }
     var dataRequests: [Recorded] { requests.filter { $0.params["api"] != "SYNO.API.Info" && $0.params["api"] != "SYNO.API.Auth" } }
 
-    func updatePinnedSPKI(_ spki: String?) {}
+    func updatePin(spki: String?, trustedName: String?) {}
     func invalidate() {}
 
     func send(_ request: URLRequest) async throws -> Data {

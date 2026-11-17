@@ -36,7 +36,7 @@ public actor ProxmoxBackend: ServerBackend {
         events = stream
         connection = PVEConnection(
             profile: profile,
-            transport: transport ?? PinnedTransport(pinnedSPKI: profile.pinnedSPKI),
+            transport: transport ?? PinnedTransport(pinnedSPKI: profile.pinnedSPKI, trustedName: profile.trustedCertificateName),
             credentials: credentials,
             deviceName: deviceName,
             openID: openID,

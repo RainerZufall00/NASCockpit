@@ -42,7 +42,7 @@ public actor SynologyBackend: ServerBackend {
         events = stream
         connection = DSMConnection(
             profile: profile,
-            transport: transport ?? PinnedTransport(pinnedSPKI: profile.pinnedSPKI),
+            transport: transport ?? PinnedTransport(pinnedSPKI: profile.pinnedSPKI, trustedName: profile.trustedCertificateName),
             credentials: credentials,
             deviceName: deviceName,
             events: continuation,

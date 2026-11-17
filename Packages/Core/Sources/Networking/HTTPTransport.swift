@@ -35,7 +35,8 @@ public protocol HTTPTransport: Sendable {
     /// Returns status and body of any HTTP response; throws `TransportError` only when no response arrived.
     /// Backends whose error details live in the body of a 4xx/5xx response (Proxmox) use this.
     func fetch(_ request: URLRequest) async throws -> HTTPResponse
-    func updatePinnedSPKI(_ spki: String?)
+    /// The key the user trusted and, for a publicly trusted certificate, its name (see `PinningDelegate`).
+    func updatePin(spki: String?, trustedName: String?)
     func invalidate()
 }
 

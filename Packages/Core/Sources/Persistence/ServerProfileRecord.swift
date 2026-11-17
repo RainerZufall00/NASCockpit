@@ -18,6 +18,8 @@ public final class ServerProfileRecord {
     /// Optional so stores written before this existed migrate without a schema version; `nil` means password.
     public var authMethodRaw: String?
     @Attribute(.allowsCloudEncryption) public var username: String = ""
+    /// The pinned key, plus `|name` when the certificate is publicly trusted for that name
+    /// (`ServerProfile.trustedCertificateName`). Kept in one field so the CloudKit schema needs no new field.
     @Attribute(.allowsCloudEncryption) public var pinnedSPKI: String?
     public var savesPassword: Bool = true
     public var backgroundRefresh: Bool = false
@@ -38,7 +40,7 @@ public final class ServerProfileRecord {
         backendRaw = profile.backend.rawValue
         authMethodRaw = profile.authMethod.rawValue
         username = profile.username
-        pinnedSPKI = profile.pinnedSPKI
+        pinnedSPKI = PinStorage.encode(spki: profile.pinnedSPKI, name: profile.trustedCertificateName)
         savesPassword = profile.savesPassword
         backgroundRefresh = profile.backgroundRefresh
         notifications = profile.notifications
@@ -56,7 +58,7 @@ public final class ServerProfileRecord {
         backendRaw = profile.backend.rawValue
         authMethodRaw = profile.authMethod.rawValue
         username = profile.username
-        pinnedSPKI = profile.pinnedSPKI
+        pinnedSPKI = PinStorage.encode(spki: profile.pinnedSPKI, name: profile.trustedCertificateName)
         savesPassword = profile.savesPassword
         backgroundRefresh = profile.backgroundRefresh
         notifications = profile.notifications
@@ -68,7 +70,8 @@ public final class ServerProfileRecord {
     }
 
     public var profile: ServerProfile {
-        ServerProfile(
+        let pin = PinStorage.decode(pinnedSPKI)
+        return ServerProfile(
             id: id,
             name: name,
             addresses: addresses,
@@ -76,7 +79,8 @@ public final class ServerProfileRecord {
             backend: BackendKind(rawValue: backendRaw) ?? .synology,
             authMethod: authMethodRaw.map(AuthMethod.init(rawValue:)) ?? .password,
             username: username,
-            pinnedSPKI: pinnedSPKI,
+            pinnedSPKI: pin.spki,
+            trustedCertificateName: pin.name,
             savesPassword: savesPassword,
             backgroundRefresh: backgroundRefresh,
             notifications: notifications,
@@ -86,6 +90,22 @@ public final class ServerProfileRecord {
             iconName: iconName,
             wakeOnLAN: wakeOnLAN
         )
+    }
+}
+
+/// `"<spki>"` or `"<spki>|<name>"`. A SHA-256 hex string never contains `|`.
+enum PinStorage {
+    static func encode(spki: String?, name: String?) -> String? {
+        guard let spki, !spki.isEmpty else { return nil }
+        guard let name, !name.isEmpty else { return spki }
+        return "\(spki)|\(name)"
+    }
+
+    static func decode(_ stored: String?) -> (spki: String?, name: String?) {
+        guard let stored, !stored.isEmpty else { return (nil, nil) }
+        guard let bar = stored.firstIndex(of: "|") else { return (stored, nil) }
+        let name = String(stored[stored.index(after: bar)...])
+        return (String(stored[..<bar]), name.isEmpty ? nil : name)
     }
 }
 

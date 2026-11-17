@@ -31,6 +31,15 @@ struct CertificateFingerprintTests {
         #expect(!info.subject.isEmpty)
     }
 
+    @Test func onlyHostNamesCountAsPublicNames() {
+        #expect(CertificateFingerprint.isDNSName("stgtcloud.synology.me"))
+        #expect(CertificateFingerprint.isDNSName("*.example.com"))
+        #expect(!CertificateFingerprint.isDNSName("192.168.1.10"))
+        #expect(!CertificateFingerprint.isDNSName("synology"))
+        #expect(!CertificateFingerprint.isDNSName("Synology Inc."))
+        #expect(!CertificateFingerprint.isDNSName("fd00::1"))
+    }
+
     @Test func pinningDelegateKeyIgnoresBracketsAndCase() {
         #expect(PinningDelegate.key(host: "[FD00::1]", port: 5001) == PinningDelegate.key(host: "fd00::1", port: 5001))
         #expect(PinningDelegate.key(host: "NAS.local", port: 5001) != PinningDelegate.key(host: "nas.local", port: 5002))

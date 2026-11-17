@@ -10,10 +10,35 @@ import Domain
 /// matches `openssl x509 -pubkey | openssl pkey -pubin -outform der | sha256`.
 public enum CertificateFingerprint {
     public static func info(for trust: SecTrust) -> CertificateInfo? {
-        guard let chain = SecTrustCopyCertificateChain(trust) as? [SecCertificate], let leaf = chain.first else {
+        guard let chain = SecTrustCopyCertificateChain(trust) as? [SecCertificate], let leaf = chain.first,
+              let info = info(for: leaf) else {
             return nil
         }
-        return info(for: leaf)
+        guard let name = publicName(of: chain, candidate: info.subject) else { return info }
+        return CertificateInfo(spkiSHA256: info.spkiSHA256, certificateSHA256: info.certificateSHA256,
+                               subject: info.subject, publicName: name)
+    }
+
+    /// The certificate's own name (`candidate`, its subject), if the system trusts the chain for that name –
+    /// i.e. a public CA issued it. Wildcards are checked with a made-up label.
+    static func publicName(of chain: [SecCertificate], candidate: String) -> String? {
+        let name = candidate.trimmingCharacters(in: .whitespaces).lowercased()
+        guard isDNSName(name) else { return nil }
+        let host = name.hasPrefix("*.") ? "nascockpit-check" + name.dropFirst() : name
+        var trust: SecTrust?
+        let policy = SecPolicyCreateSSL(true, host as CFString)
+        guard SecTrustCreateWithCertificates(chain as CFArray, policy, &trust) == errSecSuccess, let trust else { return nil }
+        return SecTrustEvaluateWithError(trust, nil) ? name : nil
+    }
+
+    /// "nas.example.com" or "*.example.com"; not an IP address, not a single label.
+    static func isDNSName(_ name: String) -> Bool {
+        let labels = (name.hasPrefix("*.") ? String(name.dropFirst(2)) : name).split(separator: ".", omittingEmptySubsequences: false)
+        guard labels.count >= 2, labels.allSatisfy({ !$0.isEmpty && $0.count <= 63 }) else { return false }
+        let allowed = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789-")
+        guard labels.allSatisfy({ $0.unicodeScalars.allSatisfy(allowed.contains) }) else { return false }
+        // An IPv4 address has an all-numeric last label; top-level domains never do.
+        return !(labels.last!.allSatisfy(\.isNumber))
     }
 
     public static func info(for certificate: SecCertificate) -> CertificateInfo? {

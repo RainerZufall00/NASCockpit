@@ -43,6 +43,18 @@ cd Packages/Core && xcodebuild test -scheme Core-Package -destination 'platform=
 In the simulator, saved passwords need Face ID enrolled (Features → Face ID → Enrolled), because the
 Keychain items require user presence.
 
+## Certificates
+
+- `PinningDelegate`: a certificate iOS trusts is always accepted. Otherwise the pinned SPKI must match (TOFU),
+  or the certificate is publicly trusted for the name the user trusted (`trustedCertificateName`). That name is
+  stored when the confirmed certificate validates against the system roots for its own subject
+  (`CertificateFingerprint.publicName`), e.g. a Let's Encrypt certificate reached by IP address. DSM renews
+  those with a new key every few months; matching the name avoids a "certificate changed" prompt each time.
+- The name is stored inside the existing `pinnedSPKI` field as `spki|name` (`PinStorage`), so the CloudKit
+  schema needs no new field. Builds before this read such a value as a changed key and ask once.
+- Edit Server (context menu or the server's ⋯ menu): name, colour, addresses, account/password (password
+  accounts only), and "Forget Certificate". Changed connection details reconnect the server.
+
 ## Status
 
 Phase 1 "Fundament": multi-address selection, TLS with SPKI pinning (TOFU), Keychain, login with OTP and

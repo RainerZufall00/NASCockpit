@@ -38,5 +38,6 @@ extension ServerProfile {
     public func connectionDetailsDiffer(from other: ServerProfile) -> Bool {
         addresses != other.addresses || backend != other.backend || authMethod != other.authMethod
             || username != other.username || pinnedSPKI != other.pinnedSPKI || savesPassword != other.savesPassword
+            || trustedCertificateName != other.trustedCertificateName
     }
 }

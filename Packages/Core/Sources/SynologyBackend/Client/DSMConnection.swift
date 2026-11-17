@@ -122,8 +122,9 @@ actor DSMConnection {
     /// TOFU: the user confirmed the fingerprint. Pins the public key for this NAS.
     func trust(_ certificate: CertificateInfo) {
         profile.pinnedSPKI = certificate.spkiSHA256
-        transport.updatePinnedSPKI(certificate.spkiSHA256)
-        events.yield(.pinned(spki: certificate.spkiSHA256))
+        profile.trustedCertificateName = certificate.publicName
+        transport.updatePin(spki: certificate.spkiSHA256, trustedName: certificate.publicName)
+        events.yield(.pinned(spki: certificate.spkiSHA256, name: certificate.publicName))
     }
 
     // MARK: Calls

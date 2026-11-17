@@ -7,11 +7,15 @@ public struct CertificateInfo: Hashable, Codable, Sendable {
     /// SHA-256 of the full certificate, for comparing with browsers / DSM.
     public let certificateSHA256: String
     public let subject: String
+    /// Host name this certificate is valid for according to a public certificate authority (e.g. Let's Encrypt),
+    /// although the connection used another name or an IP address. `nil` for self-signed certificates.
+    public let publicName: String?
 
-    public init(spkiSHA256: String, certificateSHA256: String, subject: String) {
+    public init(spkiSHA256: String, certificateSHA256: String, subject: String, publicName: String? = nil) {
         self.spkiSHA256 = spkiSHA256
         self.certificateSHA256 = certificateSHA256
         self.subject = subject
+        self.publicName = publicName
     }
 
     /// "AB:CD:EF:…"

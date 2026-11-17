@@ -40,7 +40,7 @@ final class AddServerModel {
     }
 
     struct AddressDraft: Identifiable, Equatable {
-        let id = UUID()
+        var id = UUID()
         var host = ""
         var port = String(ServerAddress.defaultHTTPSPort)
         var label = ""
@@ -96,6 +96,7 @@ final class AddServerModel {
     @ObservationIgnored private var usedOTP = false
     @ObservationIgnored private var adopted = false
     @ObservationIgnored private var pinnedSPKI: String?
+    @ObservationIgnored private var trustedCertificateName: String?
     /// The certificate prompt came from loading the realms, not from connecting.
     @ObservationIgnored private var realmsPending = false
 
@@ -159,6 +160,7 @@ final class AddServerModel {
             authMethod: authMethod,
             username: account,
             pinnedSPKI: pinnedSPKI,
+            trustedCertificateName: trustedCertificateName,
             savesPassword: secret == nil ? false : savesPassword,
             colorName: colorName,
             iconName: isProxmox ? "server.rack" : "externaldrive.connected.to.line.below"
@@ -211,6 +213,7 @@ final class AddServerModel {
 
     func trust(_ certificate: CertificateInfo) async {
         pinnedSPKI = certificate.spkiSHA256
+        trustedCertificateName = certificate.publicName
         if realmsPending {
             realmsPending = false
             step = .form
@@ -219,6 +222,7 @@ final class AddServerModel {
         }
         await backend?.trustCertificate(certificate)
         profile?.pinnedSPKI = certificate.spkiSHA256
+        profile?.trustedCertificateName = certificate.publicName
         await attempt(otp: nil)
     }
 
@@ -239,7 +243,7 @@ final class AddServerModel {
         isLoadingRealms = true
         defer { isLoadingRealms = false }
         errorMessage = nil
-        let probeProfile = ServerProfile(name: "probe", addresses: validAddresses, backend: .proxmox, authMethod: .openID(realm: ""), username: "", pinnedSPKI: pinnedSPKI)
+        let probeProfile = ServerProfile(name: "probe", addresses: validAddresses, backend: .proxmox, authMethod: .openID(realm: ""), username: "", pinnedSPKI: pinnedSPKI, trustedCertificateName: trustedCertificateName)
         let probe = ProxmoxBackend(profile: probeProfile, credentials: credentials, deviceName: ConnectionManager.deviceName)
         do {
             let found = try await probe.availableRealms().map { Realm(realm: $0.realm, type: $0.type, comment: $0.comment) }

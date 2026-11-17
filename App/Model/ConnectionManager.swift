@@ -497,6 +497,36 @@ final class ConnectionManager {
         updateProfile(id) { $0.notifyBackupFailures = enabled }
     }
 
+    /// Saves an edited profile ("Edit Server"). A new password replaces the stored one (and the
+    /// background copy, if that is on). Changed addresses, account or certificate trust reconnect the NAS.
+    func updateServer(_ edited: ServerProfile, newPassword: String?) async throws {
+        guard let index = profiles.firstIndex(where: { $0.id == edited.id }) else { return }
+        let old = profiles[index]
+        var edited = edited
+        if let last = edited.lastReachedAddressID, !edited.addresses.contains(where: { $0.id == last }) {
+            edited.lastReachedAddressID = nil
+        }
+        if let newPassword {
+            let credentials = ServerCredentials(password: newPassword)
+            if edited.savesPassword, let keychain {
+                try await keychain.save(credentials, for: edited.id, includeBackgroundCopy: edited.backgroundRefresh)
+            } else {
+                await sessionCredentials.set(credentials, for: edited.id)
+            }
+        }
+        try repository?.upsert(edited)
+        profiles[index] = edited
+
+        guard old.connectionDetailsDiffer(from: edited) || newPassword != nil else { return }
+        if let backend = backends[edited.id] { await backend.disconnect() }
+        prompts.removeAll { $0.serverID == edited.id }
+        let previous = runtime[edited.id]
+        runtime[edited.id] = Runtime(snapshot: previous?.snapshot, pendingUpdates: previous?.pendingUpdates, lastReached: previous?.lastReached)
+        attach(makeBackend(for: edited), for: edited.id)
+        await backgroundState?.update(edited.id) { $0.pausedForLogin = false }
+        await connect(edited.id, interactive: true)
+    }
+
     func rename(_ id: ServerID, to name: String, colorName: String, iconName: String) {
         updateProfile(id) {
             $0.name = name
@@ -603,8 +633,11 @@ final class ConnectionManager {
             if profile(id)?.lastReachedAddressID != addressID {
                 updateProfile(id) { $0.lastReachedAddressID = addressID }
             }
-        case .pinned(let spki):
-            updateProfile(id) { $0.pinnedSPKI = spki }
+        case .pinned(let spki, let name):
+            updateProfile(id) {
+                $0.pinnedSPKI = spki
+                $0.trustedCertificateName = name
+            }
         case .loggedIn:
             break
         case .sessionInterrupted:

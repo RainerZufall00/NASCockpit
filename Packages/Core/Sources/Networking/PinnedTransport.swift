@@ -7,8 +7,8 @@ public final class PinnedTransport: HTTPTransport {
     private let delegate: PinningDelegate
     private let session: URLSession
 
-    public init(pinnedSPKI: String?, requestTimeout: TimeInterval = 10) {
-        delegate = PinningDelegate(pinnedSPKI: pinnedSPKI)
+    public init(pinnedSPKI: String?, trustedName: String? = nil, requestTimeout: TimeInterval = 10) {
+        delegate = PinningDelegate(pinnedSPKI: pinnedSPKI, trustedName: trustedName)
         let configuration = URLSessionConfiguration.ephemeral
         configuration.urlCache = nil
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
@@ -24,8 +24,8 @@ public final class PinnedTransport: HTTPTransport {
         session.invalidateAndCancel()
     }
 
-    public func updatePinnedSPKI(_ spki: String?) {
-        delegate.updatePin(spki)
+    public func updatePin(spki: String?, trustedName: String?) {
+        delegate.updatePin(spki: spki, trustedName: trustedName)
     }
 
     public func invalidate() {

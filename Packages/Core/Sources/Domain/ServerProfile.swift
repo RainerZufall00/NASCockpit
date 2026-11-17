@@ -156,6 +156,9 @@ public struct ServerProfile: Identifiable, Hashable, Codable, Sendable {
     public var username: String
     /// SHA-256 of the SubjectPublicKeyInfo (hex, lowercase). Pinned per NAS, not per address.
     public var pinnedSPKI: String?
+    /// Set when the trusted certificate came from a public certificate authority: renewed certificates for this
+    /// name are accepted without asking, also when the app connects by IP address (Let's Encrypt changes the key).
+    public var trustedCertificateName: String?
     public var savesPassword: Bool
     public var backgroundRefresh: Bool
     public var notifications: NotificationMatrix
@@ -190,6 +193,7 @@ public struct ServerProfile: Identifiable, Hashable, Codable, Sendable {
         authMethod: AuthMethod = .password,
         username: String,
         pinnedSPKI: String? = nil,
+        trustedCertificateName: String? = nil,
         savesPassword: Bool = true,
         backgroundRefresh: Bool = false,
         notifications: NotificationMatrix = NotificationMatrix(),
@@ -207,6 +211,7 @@ public struct ServerProfile: Identifiable, Hashable, Codable, Sendable {
         self.authMethod = authMethod
         self.username = username
         self.pinnedSPKI = pinnedSPKI
+        self.trustedCertificateName = trustedCertificateName
         self.savesPassword = savesPassword
         self.backgroundRefresh = backgroundRefresh
         self.notifications = notifications

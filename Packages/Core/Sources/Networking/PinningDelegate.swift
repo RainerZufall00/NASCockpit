@@ -3,8 +3,12 @@ import Security
 import Synchronization
 import Domain
 
-/// Per-server TLS decision. ATS stays on; the only exception for certificates the
-/// system does not trust happens here, and only for the SPKI pinned for this NAS.
+/// Per-server TLS decision. ATS stays on; the only exceptions for certificates the
+/// system does not trust happen here:
+/// - the SPKI pinned for this NAS, or
+/// - a certificate that a public CA issued for the name the user trusted (`trustedName`). That covers a NAS
+///   reached by IP address whose Let's Encrypt certificate is renewed with a new key every few months. Only the
+///   owner of that domain can get such a certificate, so this is as strict as the pin.
 final class PinningDelegate: NSObject, URLSessionDelegate, Sendable {
     enum Observation: Sendable, Equatable {
         case trusted
@@ -13,15 +17,20 @@ final class PinningDelegate: NSObject, URLSessionDelegate, Sendable {
         case unsupportedKey
     }
 
-    private let pinnedSPKI: Mutex<String?>
-    private let observations = Mutex<[String: Observation]>([:])
-
-    init(pinnedSPKI: String?) {
-        self.pinnedSPKI = Mutex(pinnedSPKI)
+    private struct Pin {
+        var spki: String?
+        var name: String?
     }
 
-    func updatePin(_ spki: String?) {
-        pinnedSPKI.withLock { $0 = spki }
+    private let pin: Mutex<Pin>
+    private let observations = Mutex<[String: Observation]>([:])
+
+    init(pinnedSPKI: String?, trustedName: String? = nil) {
+        pin = Mutex(Pin(spki: pinnedSPKI, name: trustedName))
+    }
+
+    func updatePin(spki: String?, trustedName: String?) {
+        pin.withLock { $0 = Pin(spki: spki, name: trustedName) }
         observations.withLock { $0.removeAll() }
     }
 
@@ -56,8 +65,12 @@ final class PinningDelegate: NSObject, URLSessionDelegate, Sendable {
         let systemTrusted = SecTrustEvaluateWithError(trust, nil)
         if systemTrusted { return .trusted }
         guard let info = CertificateFingerprint.info(for: trust) else { return .unsupportedKey }
-        let pin = pinnedSPKI.withLock { $0 }
-        guard let pin else { return .untrusted(info) }
-        return pin == info.spkiSHA256 ? .trusted : .mismatch(info)
+        let pin = pin.withLock { $0 }
+        if let name = pin.name, let publicName = info.publicName,
+           publicName.caseInsensitiveCompare(name) == .orderedSame {
+            return .trusted
+        }
+        guard let spki = pin.spki else { return .untrusted(info) }
+        return spki == info.spkiSHA256 ? .trusted : .mismatch(info)
     }
 }

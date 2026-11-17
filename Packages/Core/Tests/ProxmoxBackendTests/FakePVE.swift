@@ -78,7 +78,7 @@ final class FakePVE: HTTPTransport, Sendable {
         state.withLock { change(&$0.config) }
     }
 
-    func updatePinnedSPKI(_ spki: String?) {}
+    func updatePin(spki: String?, trustedName: String?) {}
     func invalidate() {}
 
     func send(_ request: URLRequest) async throws -> Data {

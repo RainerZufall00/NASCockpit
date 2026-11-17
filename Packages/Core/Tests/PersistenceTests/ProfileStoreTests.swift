@@ -112,6 +112,24 @@ struct ProfileStoreTests {
         #expect(repository.all().first?.backgroundRefresh == true)
     }
 
+    @Test func trustedCertificateNameIsStoredWithThePin() throws {
+        let container = try ProfileRepository.makeContainer(inMemory: true)
+        let repository = ProfileRepository(container: container, deviceSettings: DeviceProfileSettings(defaults: freshDefaults()))
+        var nas = profile("NAS", host: "192.168.1.10")
+        nas.pinnedSPKI = "abc"
+        nas.trustedCertificateName = "nas.example.com"
+        try repository.upsert(nas)
+        var loaded = try #require(repository.all().first)
+        #expect(loaded.pinnedSPKI == "abc")
+        #expect(loaded.trustedCertificateName == "nas.example.com")
+
+        loaded.trustedCertificateName = nil
+        try repository.upsert(loaded)
+        loaded = try #require(repository.all().first)
+        #expect(loaded.pinnedSPKI == "abc")
+        #expect(loaded.trustedCertificateName == nil)
+    }
+
     @Test func sameNASAddedOnTwoDevicesMergesIntoOne() throws {
         let container = try ProfileRepository.makeContainer(inMemory: true)
         let repository = ProfileRepository(container: container, deviceSettings: DeviceProfileSettings(defaults: freshDefaults()))
