@@ -69,7 +69,7 @@ NAS admin credentials are about as sensitive as it gets, so security is a core g
 
 ## 🚧 Status
 
-NAS Cockpit is in active development and not yet on the App Store. Many DSM and Proxmox endpoints are built from the
+NAS Cockpit is in active development and being prepared for the App Store (currently in TestFlight testing). Many DSM and Proxmox endpoints are built from the
 official API guides and open-source clients but are still marked `UNVERIFIED` in the code until they have been tested
 against real hardware. Reports from your own DSM or PVE setup are very welcome – see the
 [technical notes](docs/TECHNICAL.md) for what still needs checking and the [roadmap](ROADMAP.md) (German) for what's next.
@@ -87,6 +87,16 @@ open NASCockpit.xcodeproj
 
 The simulator build works without a team ID. Tap **Try the Demo** on the first screen to explore the app with sample
 servers. Details for contributors are in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## 💬 Feedback & privacy
+
+[Support page](https://rainerzufall00.github.io/NASCockpit/support) · [Open an issue](https://github.com/RainerZufall00/NASCockpit/issues)
+
+Privacy: the app talks only to your own servers and, if you turn on sync, your private iCloud. No account, no
+analytics, nothing reaches the developer. [Privacy Policy](https://rainerzufall00.github.io/NASCockpit/privacy)
+
+This repository holds the app's source code as well as its support page and privacy policy (`docs/`, served via
+GitHub Pages) and the App Store texts ([AppStore/listing.md](AppStore/listing.md)).
 
 ## ☕ Support
 

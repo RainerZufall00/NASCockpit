@@ -24,6 +24,8 @@ AppStore/
     capture-duo-screenshots.sh  dasselbe fürs iPhone Duo, je Display ein Lauf
     compose-screenshots.swift   Überschrift, Rahmen, Hintergrund in den Farben des App-Icons
     check-lengths.py            prüft die Zeichengrenzen der Texte
+    make-listing.py             schreibt listing.md aus metadata/ (nach jeder Textänderung laufen lassen)
+  listing.md                  alle englischen Texte zum Kopieren nach App Store Connect, mit Zeichenzahl (erzeugt)
 docs/privacy.md, docs/support.md  Datenschutz und Support (GitHub Pages aus docs/)
 ```
 
@@ -53,8 +55,7 @@ Die App startet dabei mit `-screenshot <Motiv>` (nur in Debug-Builds, `Screensho
 ### Muss noch erledigt werden
 - [x] **Duo innen aufgenommen** (2026-11-17). Die Screenshots sind nicht im Repo – vor der Rückgabe des Macs
   sichern oder in App Store Connect hochladen, sonst geht das nur mit einem Mac neu.
-- [ ] **GitHub Pages einschalten** (Repo-Einstellungen → Pages → Branch `main`, Ordner `/docs`), damit
-  Datenschutz- und Support-URL erreichbar sind:
+- [x] **GitHub Pages** (Branch `main`, Ordner `/docs`) ist an, Datenschutz- und Support-URL sind erreichbar:
   - Datenschutz: https://rainerzufall00.github.io/NASCockpit/privacy
   - Support: https://rainerzufall00.github.io/NASCockpit/support
 - [ ] **Review-Kontakt:** Telefonnummer in `review_information/phone_number.txt` (nicht committen).
@@ -65,7 +66,7 @@ Die App startet dabei mit `-screenshot <Motiv>` (nur in Debug-Builds, `Screensho
 - [ ] **Version:** `MARKETING_VERSION` steht auf 0.1, Build 1. Für den Release 1.0 setzen (App und Widgets),
   archivieren und hochladen.
 - [ ] **Name prüfen:** Ist „NAS Cockpit“ im App Store frei? App Store Connect meldet es beim Anlegen.
-- [ ] **README:** Der Abschnitt „Status“ sagt noch „not yet on the App Store“ – nach der Freigabe anpassen.
+- [ ] **README:** Der Abschnitt „Status“ nennt noch TestFlight – nach der Freigabe anpassen und App-Store-Badge ergänzen.
 - [ ] Optional: **Multicast-Entitlement** (`com.apple.developer.networking.multicast`) bei Apple beantragen, damit
   Wake-on-LAN als Broadcast funktioniert.
 
@@ -73,7 +74,7 @@ Die App startet dabei mit `-screenshot <Motiv>` (nur in Debug-Builds, `Screensho
 
 | Feld | Wert |
 | --- | --- |
-| Hauptsprache | Englisch (USA), dazu Deutsch – die Oberfläche der App ist Englisch |
+| Hauptsprache | Englisch (USA) – die Oberfläche der App ist Englisch. Deutsche Texte liegen bereit, werden vorerst nicht genutzt |
 | Name | NAS Cockpit (11/30) |
 | Untertitel | Your homelab at a glance (24/30) · Dein Homelab auf einen Blick (28/30) |
 | Kategorie | Dienstprogramme, zweite Kategorie Entwickler-Tools |
