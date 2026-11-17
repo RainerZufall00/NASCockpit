@@ -111,9 +111,6 @@ final class SecurityAdvisorModel {
     private(set) var report: SecurityScanReport?
     private(set) var error: BackendError?
     private(set) var hasLoaded = false
-    private(set) var canScan = true
-    /// Set when the app started a scan, so polling waits for DSM to report it as running.
-    private(set) var scanRequestedAt: Date?
 
     @ObservationIgnored let backend: any ServerBackend
     let serverName: String
@@ -125,49 +122,24 @@ final class SecurityAdvisorModel {
 
     var isScanning: Bool { report?.isScanning == true }
 
-    /// Poll while DSM scans, and for a short while after the app asked it to.
-    var shouldPoll: Bool {
-        isScanning || (scanRequestedAt.map { $0 > .now.addingTimeInterval(-20) } ?? false)
-    }
-
-    /// Changes when polling has to start again.
-    var pollID: String { "\(isScanning)-\(scanRequestedAt?.timeIntervalSince1970 ?? 0)" }
-
     func load() async {
         defer { hasLoaded = true }
         do {
-            let report = try await backend.securityReport()
-            self.report = report
+            report = try await backend.securityReport()
             error = nil
-            if report.isScanning { scanRequestedAt = nil }
         } catch {
             let mapped = BackendError(error)
             if mapped != .cancelled { self.error = mapped }
         }
-        let denied = await backend.deniedActions()
-        canScan = !denied.contains(.securityScan)
     }
 
+    /// Follows a scan that was started in DSM.
     func pollWhileScanning() async {
-        while shouldPoll, !Task.isCancelled {
+        while isScanning, !Task.isCancelled {
             try? await Task.sleep(for: .seconds(3))
             guard !Task.isCancelled else { return }
             await load()
         }
-    }
-
-    func startScan(center: OperationCenter) {
-        let backend = backend
-        center.enqueue(serverID: backend.serverID, serverName: serverName, kind: .securityScan,
-                       title: String(localized: "Security scan")) { [weak self] _ in
-            try await backend.startSecurityScan()
-            await self?.scanAccepted()
-        }
-    }
-
-    /// Called when the start request has been accepted.
-    func scanAccepted() {
-        scanRequestedAt = .now
     }
 }
 
@@ -175,39 +147,17 @@ final class SecurityAdvisorModel {
 
 public struct SecurityAdvisorView: View {
     @State private var model: SecurityAdvisorModel
-    @Environment(OperationCenter.self) private var center
 
     public init(backend: any ServerBackend, serverName: String) {
         _model = State(initialValue: SecurityAdvisorModel(backend: backend, serverName: serverName))
     }
 
     public var body: some View {
-        let operation = center.visible(.securityScan, on: model.backend.serverID)
-        let sending = operation.map { !$0.status.isFinished } ?? false
         List {
             if let report = model.report {
                 Section {
                     hero(report)
                         .listRowBackground(Color.clear)
-                }
-                if model.canScan {
-                    Section {
-                        Button {
-                            model.startScan(center: center)
-                        } label: {
-                            HStack {
-                                Label(report.isScanning ? LocalizedStringKey("Scan Running") : "Scan Now", systemImage: "shield.lefthalf.filled")
-                                Spacer()
-                                if sending { ProgressView() }
-                            }
-                        }
-                        .disabled(sending || report.isScanning)
-                        if let operation, case .failed = operation.status {
-                            OperationStatusView(operation)
-                        }
-                    } footer: {
-                        Text("Runs the same checks as Security Advisor in DSM. The scan runs on the NAS and takes a few minutes; you can close the app in the meantime.")
-                    }
                 }
                 if !report.findings.isEmpty {
                     Section("Findings") {
@@ -229,7 +179,7 @@ public struct SecurityAdvisorView: View {
                     if report.findings.isEmpty, report.failedCount > 0 {
                         Text("DSM does not name the failed checks here. Open Security Advisor in DSM for details and fixes.")
                     } else {
-                        Text("Fix findings in DSM; Security Advisor shows the steps for each check.")
+                        Text("Start a scan and fix findings in DSM → Security Advisor; it shows the steps for each check.")
                     }
                 }
             } else if let error = model.error {
@@ -245,8 +195,7 @@ public struct SecurityAdvisorView: View {
         .navigationBarTitleDisplayMode(.inline)
         .refreshable { await model.load() }
         .task { await model.load() }
-        .task(id: model.pollID) { await model.pollWhileScanning() }
-        .onChange(of: center.completedCount) { Task { await model.load() } }
+        .task(id: model.isScanning) { await model.pollWhileScanning() }
     }
 
     private func hero(_ report: SecurityScanReport) -> some View {

@@ -75,7 +75,7 @@ let package = Package(
         .target(name: "InboxFeature", dependencies: ["Domain", "DesignSystem", "DemoBackend"]),
         // Proxmox: virtual machines and containers.
         .target(name: "VirtualMachinesFeature", dependencies: ["Domain", "DesignSystem", "DemoBackend"]),
-        // DSM Security Advisor: scan results and "Scan Now".
+        // DSM Security Advisor: results of the last scan (read-only).
         .target(name: "SecurityAdvisorFeature", dependencies: ["Domain", "DesignSystem", "DemoBackend"]),
 
         .testTarget(

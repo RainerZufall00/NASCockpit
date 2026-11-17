@@ -97,7 +97,7 @@ enum ServerSection: String, CaseIterable, Identifiable, Hashable {
         case .files: "Browse, copy, move and delete"
         case .backup: kind == .proxmox ? "Backup jobs, last runs, back up now" : "Backup tasks, back up now"
         case .snapshots: "Snapshots and replication"
-        case .security: "Scan results, scan now"
+        case .security: "Results of the last scan"
         case .logs: kind == .proxmox ? "Journal and sign-ins" : "System and connection logs"
         case .controlPanel: kind == .proxmox ? "Restart and shut down" : "Updates, accounts, SSH, power"
         }
