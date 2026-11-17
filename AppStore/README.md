@@ -16,7 +16,7 @@ AppStore/
       iPhone-6.3/         8 Bilder, 1206 × 2622 – für das Feld „6,1″/6,3″“
       iPad-13/            5 Bilder, 2752 × 2064 – Querformat, alle drei Spalten sichtbar
       iPhone-Duo-outer/   5 Bilder, 1398 × 2034 – zugeklappt
-      iPhone-Duo-inner/   5 Bilder, 2007 × 2853 – aufgeklappt (noch aufzunehmen, siehe unten)
+      iPhone-Duo-inner/   5 Bilder, 2007 × 2853 – aufgeklappt und hochkant
       Creative/           header-3840x1646.png (Kopfzeile der Produktseite), search-3840x2560.png (Suchergebnisse)
     raw/                  Rohaufnahmen aus dem Simulator
   Tools/
@@ -43,16 +43,16 @@ Die App startet dabei mit `-screenshot <Motiv>` (nur in Debug-Builds, `Screensho
 
 - Das **iPad** muss im Querformat liegen. Nach einem Neustart des Simulators steht es wieder hochkant – einmal
   drehen, das Skript warnt bei falscher Größe.
-- Das **iPhone Duo** lässt sich nicht per Skript falten. Für `inner` im Device Hub aufklappen, für `outer`
-  zuklappen und hochkant halten. Sonst bricht das Skript mit einer Meldung ab, statt schwarze Bilder zu sammeln.
+- Das **iPhone Duo** lässt sich nicht per Skript falten oder drehen. Für `inner` im Device Hub aufklappen, für `outer`
+  zuklappen, beides hochkant (aufgeklappt sieht es fast quadratisch aus: hochkant ist das Bild 2007 px breit, quer
+  2853 px). Sonst bricht das Skript mit einer Meldung ab, statt schwarze oder quer liegende Bilder zu sammeln.
 - Uhrzeit in der Statusleiste: 9:41 (beim Duo nur die Uhrzeit, mehr nimmt sein Simulator nicht an).
 
 ## Vor dem Einreichen
 
 ### Muss noch erledigt werden
-- [ ] **Duo innen aufnehmen:** Device Hub → „NAS Cockpit Shots Duo“ aufklappen, dann
-  `capture-duo-screenshots.sh inner` und `compose-screenshots.swift`. Duo-Screenshots sind bis April 2027
-  freiwillig, bringen aber das Duo-Abzeichen auf der Produktseite.
+- [x] **Duo innen aufgenommen** (2026-11-17). Die Screenshots sind nicht im Repo – vor der Rückgabe des Macs
+  sichern oder in App Store Connect hochladen, sonst geht das nur mit einem Mac neu.
 - [ ] **GitHub Pages einschalten** (Repo-Einstellungen → Pages → Branch `main`, Ordner `/docs`), damit
   Datenschutz- und Support-URL erreichbar sind:
   - Datenschutz: https://rainerzufall00.github.io/NASCockpit/privacy
