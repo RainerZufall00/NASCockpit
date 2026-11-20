@@ -135,8 +135,15 @@ struct WriteTests {
         let progress = ProgressRecorder()
         try await test.backend.installSystemUpdate(progress: progress.handler)
 
-        #expect(test.transport.calls("SYNO.Core.Upgrade.Server.Download", "start").count == 1)
-        #expect(test.transport.calls("SYNO.Core.Upgrade", "start").count == 1)
+        // Parameters as DSM's Admin Center sends them; without them DSM answers 101.
+        let download = try #require(test.transport.calls("SYNO.Core.Upgrade.Server.Download", "start").first)
+        #expect(download.params["target"] == #""update""#)
+        #expect(download.params["need_auto_smallupdate"] == "true")
+        let install = try #require(test.transport.calls("SYNO.Core.Upgrade", "start").first)
+        #expect(install.params["type"] == #""server""#)
+        #expect(install.params["force"] == "true")
+        #expect(install.params["version"] == "1")
+        #expect(install.params["updateType"] == nil)
         #expect(test.transport.loginCount == 2)
         #expect(progress.all.last == 1)
 
@@ -151,6 +158,29 @@ struct WriteTests {
         }
         let rebooting = try #require(states.firstIndex(of: .rebooting))
         #expect(states[rebooting...].contains(.connected))
+    }
+
+    @Test func systemUpdateDownloadedByDSMInstallsRightAway() async throws {
+        var config = FakeDSM.Configuration()
+        config.systemUpdateDownloaded = true
+        let test = try await TestBackend.connected(configuration: config)
+        try await test.backend.installSystemUpdate { _ in }
+
+        #expect(test.transport.calls("SYNO.Core.Upgrade.Server.Download", "start").isEmpty)
+        #expect(test.transport.calls("SYNO.Core.Upgrade", "start").count == 1)
+    }
+
+    @Test func rejectedSystemUpdateSaysWhichStepFailed() async throws {
+        var config = FakeDSM.Configuration()
+        config.errors = ["SYNO.Core.Upgrade/start": 101]
+        let test = try await TestBackend.connected(configuration: config)
+        do {
+            try await test.backend.installSystemUpdate { _ in }
+            Issue.record("expected an error")
+        } catch BackendError.operationFailed(let message) {
+            #expect(message.contains("install"))
+            #expect(message.contains("101"))
+        }
     }
 
     @Test func installationPhaseDoesNotCountAsBack() async throws {

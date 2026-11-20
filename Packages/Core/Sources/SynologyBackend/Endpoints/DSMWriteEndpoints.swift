@@ -57,21 +57,34 @@ extension DSMEndpoints {
         }
     }
 
+    /// Calls as DSM 7's own Admin Center sends them (Update & Restore). Without `target` / `type` DSM answers 101.
     enum SystemUpgrade {
         static let downloadAPI = "SYNO.Core.Upgrade.Server.Download"
         static let api = "SYNO.Core.Upgrade"
 
+        /// `status` is "ready_upgrade" once the update is downloaded (DSM often downloads it on its own).
+        static var status: DSMEndpoint<UpgradeStatusDTO> {
+            DSMEndpoint(api: api, method: "basic_status", versions: 1...1, timeout: 15)
+        }
+
         static var download: DSMEndpoint<EmptyResponse> {
-            DSMEndpoint(api: downloadAPI, method: "start", versions: 1...2, isWrite: true, timeout: 30)
+            DSMEndpoint(
+                api: downloadAPI,
+                method: "start",
+                versions: 1...2,
+                params: ["target": jsonString("update"), "need_auto_smallupdate": "true"],
+                isWrite: true,
+                timeout: 60
+            )
         }
 
         static var downloadProgress: DSMEndpoint<TaskStatusDTO> {
-            DSMEndpoint(api: downloadAPI, method: "progress", versions: 1...2, timeout: 15)
+            DSMEndpoint(api: downloadAPI, method: "progress", versions: 1...2, params: ["need_download_target": "true"], timeout: 15)
         }
 
         /// Installs the downloaded update. DSM reboots on its own afterwards.
         static var install: DSMEndpoint<EmptyResponse> {
-            DSMEndpoint(api: api, method: "start", versions: 1...2, params: ["updateType": jsonString("all")], isWrite: true, timeout: 60)
+            DSMEndpoint(api: api, method: "start", versions: 1...1, params: ["force": "true", "type": jsonString("server")], isWrite: true, timeout: 60)
         }
     }
 

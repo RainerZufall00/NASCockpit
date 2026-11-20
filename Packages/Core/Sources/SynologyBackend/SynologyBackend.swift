@@ -340,15 +340,51 @@ public actor SynologyBackend: ServerBackend {
 
     public func installSystemUpdate(progress: @escaping ProgressHandler) async throws {
         try await write(.systemUpdate) {
-            _ = try await self.connection.call(DSMEndpoints.SystemUpgrade.download)
             // Download: 0 … 0.8 of the bar, installation + reboot: the rest (not measurable).
-            try await self.poll(progress: { value in progress(value.map { $0 * 0.8 }) }) {
-                try await self.connection.call(DSMEndpoints.SystemUpgrade.downloadProgress)
+            if try await self.systemUpgradeStatus()?.isDownloaded != true {
+                try await self.systemUpgradeStep("download") { _ = try await self.connection.call(DSMEndpoints.SystemUpgrade.download) }
+                try await self.waitForSystemDownload { value in progress(value.map { $0 * 0.8 }) }
             }
-            _ = try await self.connection.call(DSMEndpoints.SystemUpgrade.install)
+            progress(0.8)
+            try await self.systemUpgradeStep("install") { _ = try await self.connection.call(DSMEndpoints.SystemUpgrade.install) }
             progress(nil)
             try await self.connection.awaitReboot()
             progress(1)
+        }
+    }
+
+    /// nil when this DSM has no `basic_status`; then only the download progress decides.
+    private func systemUpgradeStatus() async throws -> UpgradeStatusDTO? {
+        do {
+            return try await connection.call(DSMEndpoints.SystemUpgrade.status)
+        } catch let error as DSMError where !error.isSessionError && error != .permissionDenied && !error.isConnectivityError {
+            return nil
+        }
+    }
+
+    /// Done when DSM reports the update as ready to install or the download progress says finished.
+    private func waitForSystemDownload(progress: @escaping ProgressHandler) async throws {
+        let clock = ContinuousClock()
+        let start = clock.now
+        while clock.now - start < taskDeadline {
+            if try await systemUpgradeStatus()?.isDownloaded == true { return }
+            let current = try await systemUpgradeStep("download progress") { try await self.connection.call(DSMEndpoints.SystemUpgrade.downloadProgress) }
+            if current.hasFailed {
+                throw BackendError.operationFailed(String(localized: "The NAS could not download the DSM update (\(current.errorCode ?? 0))."))
+            }
+            progress(current.fraction)
+            if current.finished { return }
+            try await Task.sleep(for: taskPollInterval)
+        }
+        throw BackendError.timeout
+    }
+
+    /// Names the step in a plain DSM error, so "error 101" says which call DSM rejected.
+    private func systemUpgradeStep<T>(_ step: String, _ body: () async throws -> T) async throws -> T {
+        do {
+            return try await body()
+        } catch DSMError.api(let code) {
+            throw BackendError.operationFailed(String(localized: "DSM rejected the update (\(step), error \(String(code)))."))
         }
     }
 

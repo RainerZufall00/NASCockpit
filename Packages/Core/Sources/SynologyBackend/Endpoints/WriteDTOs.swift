@@ -45,6 +45,19 @@ struct TaskStatusDTO: Decodable, Sendable {
     }
 }
 
+/// SYNO.Core.Upgrade / basic_status: where the DSM update stands ("ready_upgrade", "upgrading", …).
+struct UpgradeStatusDTO: Decodable, Sendable {
+    let status: String?
+
+    private enum CodingKeys: String, CodingKey { case status }
+
+    init(from decoder: any Decoder) throws {
+        status = try decoder.container(keyedBy: CodingKeys.self).lossyString(.status)
+    }
+
+    var isDownloaded: Bool { status?.lowercased() == "ready_upgrade" }
+}
+
 /// SYNO.Docker.Container / list
 struct ContainerListDTO: Decodable, Sendable {
     struct Container: Decodable, Sendable {

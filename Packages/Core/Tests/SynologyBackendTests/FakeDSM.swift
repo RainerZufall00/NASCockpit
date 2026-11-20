@@ -64,6 +64,8 @@ final class FakeDSM: HTTPTransport, Sendable {
         /// Error code for log queries that carry any of `rejectedLogParameters` (like DSM 7.2 answering 5017).
         var rejectsFilteredLogs: Int?
         var rejectedLogParameters: Set<String> = ["target"]
+        /// DSM already downloaded its update on its own (`basic_status` answers "ready_upgrade").
+        var systemUpdateDownloaded = false
     }
 
     struct State: Sendable {
@@ -186,6 +188,9 @@ final class FakeDSM: HTTPTransport, Sendable {
                     let done = state.polls > state.config.unfinishedPolls
                     let percent = done ? 100 : state.polls * 100 / (state.config.unfinishedPolls + 1)
                     return .data(Data(#"{"success":true,"data":{"finished":\#(done),"progress":\#(percent)}}"#.utf8))
+                case ("SYNO.Core.Upgrade", "basic_status"):
+                    let status = state.config.systemUpdateDownloaded ? "ready_upgrade" : "none"
+                    return .data(Data(#"{"success":true,"data":{"status":"\#(status)","target":"update","allow_upgrade":true}}"#.utf8))
                 case ("SYNO.Core.Upgrade.Server.Download", "start"):
                     state.polls = 0
                     return .data(Fixture.ok)

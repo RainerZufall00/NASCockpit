@@ -122,8 +122,11 @@ Marked `UNVERIFIED` / `TODO(verify)` in `DSMEndpoints.swift`, `DSMWriteEndpoints
   `SYNO.Core.SyslogClient.Log` parameters.
 - Packages: `SYNO.Core.Package.Control` start/stop (`id`), `SYNO.Core.Package.Installation` upgrade
   (`name`, `blqinst`) and `status` (`task_id`).
-- DSM update: `SYNO.Core.Upgrade.Server.Download` start/progress, `SYNO.Core.Upgrade` start; how DSM
-  behaves during the installation phase before the restart.
+- DSM update: calls as DSM 7's Admin Center sends them. `SYNO.Core.Upgrade` `basic_status` (v1; "ready_upgrade"
+  means DSM already downloaded the update, then the download is skipped), `SYNO.Core.Upgrade.Server.Download`
+  `start` (`target="update"`, `need_auto_smallupdate=true`) and `progress` (`need_download_target=true`),
+  `SYNO.Core.Upgrade` `start` (v1, `force=true`, `type="server"`; the old `updateType` got error 101). Still
+  open: the shape of the download progress and how DSM behaves during the installation phase before the restart.
 - Container Manager: `SYNO.Docker.Container` list/start/stop/restart (JSON-encoded `name`),
   `SYNO.Docker.Container.Resource`, `SYNO.Docker.Container.Log`, `SYNO.Docker.Project` list/start/stop/build
   (JSON-encoded `id`).
